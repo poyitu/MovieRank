@@ -38,7 +38,7 @@ dependencies {
     implementation 'com.bytedance.ies.ugc.aweme:opensdk-china-external:0.1.9.0'
     implementation 'com.bytedance.ies.ugc.aweme:opensdk-common:0.1.9.0'
 
-    //集成到开发环境
+    //集成到开发环境-
     implementation 'com.bytedance.ies.ugc.aweme:opensdk-china-external:0.1.9.0'
     implementation 'com.bytedance.ies.ugc.aweme:opensdk-common:0.1.9.0'
 }
