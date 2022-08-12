@@ -25,33 +25,33 @@ import java.util.List;
 
 public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MyViewholder> {
     private Context context;
-    private ArrayList<RankBean> beanArrayList;
+    private List<RankBean.DataDTO.ListDTO> beanArrayList;
 
-    public MovieAdapter(Context context, ArrayList<RankBean> beanArrayList) {
+    public MovieAdapter(Context context, List<RankBean.DataDTO.ListDTO> beanArrayList) {
         this.context = context;
         this.beanArrayList = beanArrayList;
     }
 
-    public void setData(ArrayList<RankBean> rankBeans) {
+    public void setData(List<RankBean.DataDTO.ListDTO> rankBeans) {
         beanArrayList = rankBeans;
     }
 
     @NonNull
     @Override
     public MyViewholder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        //item_layout是Reclyerview每个格子的布局
-        //获取recylerview格子的样式
-        View itemview = View.inflate(context, R.layout.movie_item, null);
-        //返回根据myViewHodler（）处理完的新View
-        return new MyViewholder(itemview);
+        LayoutInflater layoutInflater = LayoutInflater.from(parent.getContext());
+        View itemView;
+
+        itemView = layoutInflater.inflate(R.layout.movie_item, parent, false);
+        return new MovieAdapter.MyViewholder(itemView);
     }
 
 
     @Override
     public void onBindViewHolder(@NonNull MyViewholder holder, int position) {
-        RankBean movie = beanArrayList.get(position);
-        holder.tvMovieName.setText(movie.getData().getList().get(position).getName());
-        holder.tvActor.setText((CharSequence) movie.getData().getList().get(position).getActors());
+        RankBean.DataDTO.ListDTO movie = beanArrayList.get(position);
+        holder.tvMovieName.setText(movie.getName());
+        //holder.tvActor.setText((CharSequence) movie.getActors());
         //holder.tvDirector.setText((CharSequence) movie.getDirectors());
         //holder.tvTime.setText(movie.getRelease_date());
         //holder.tvPopularity.setText(movie.getSearch_hot());

@@ -43,7 +43,7 @@ public class MovieFragment extends Fragment {
     private String mParam2;
     private RecyclerView mRecyclerView;
     private MovieAdapter mAdapter;
-    private ArrayList<RankBean> beanArrayList = new ArrayList<>();
+    private ArrayList<RankBean.DataDTO.ListDTO> beanArrayList = new ArrayList<>();
 
     public MovieFragment() {
         // Required empty public constructor
@@ -98,9 +98,12 @@ public class MovieFragment extends Fragment {
             public void onSuccess(Object o) {
                 String json = o.toString();
                 Log.d(TAG, "json: " + json);
-                ArrayList<RankBean> rankBeans = JsonParse.getInstance().fromToJson(json, new TypeToken<List<RankBean>>() {
-                }.getType());
-                mAdapter.setData(rankBeans);
+                List<RankBean.DataDTO.ListDTO> rank_list = ((RankBean) o).getData().getList();
+                for (RankBean.DataDTO.ListDTO listDTO : rank_list) {
+                    Log.d(TAG, "onSuccess: " + listDTO.getName());
+                }
+                mAdapter = new MovieAdapter(getActivity(), rank_list);
+                //mAdapter.setData(rank_list);
 
             }
 
@@ -114,7 +117,7 @@ public class MovieFragment extends Fragment {
     private void initRecyclerview() {
         mRecyclerView = (RecyclerView) root.findViewById(R.id.tv1);
         //创建adapter类的对象
-        mAdapter = new MovieAdapter(getActivity(), beanArrayList);
+
         //将对象作为参数通过setAdapter方法设置给recylerview；
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         mRecyclerView.setAdapter(mAdapter);
