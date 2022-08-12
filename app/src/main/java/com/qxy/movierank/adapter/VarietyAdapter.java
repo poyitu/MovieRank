@@ -77,8 +77,8 @@ public class VarietyAdapter extends RecyclerView.Adapter<VarietyAdapter.InnerHol
         public void setItemData(RankBean.DataDTO.ListDTO varietyShowBean){
 
             nameVarietyItem.setText(varietyShowBean.getName()+"");
-            directorVarietyItem.setText(varietyShowBean.getDirectors().toString()+"");
-//            actorVarietyItem.setText(varietyShowBean.getActors().toString()+"");
+            directorVarietyItem.setText(varietyShowBean.getDirectors().toString());
+//            actorVarietyItem.setText(varietyShowBean.getActors().toString());
             popularityVarietyItem.setText(varietyShowBean.getDiscussion_hot()+"");
         }
     }
