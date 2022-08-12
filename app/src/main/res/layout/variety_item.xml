@@ -12,7 +12,7 @@
         android:layout_height="match_parent">
 
         <ImageView
-            android:id="@+id/imageView4"
+            android:id="@+id/imageView_variety_item"
             android:layout_width="160dp"
             android:layout_height="224dp"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -24,41 +24,41 @@
             android:importantForAccessibility="no"/>
 
         <TextView
-            android:id="@+id/name"
+            android:id="@+id/name_variety_item"
             android:textSize="18sp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
             android:layout_marginTop="12dp"
-            app:layout_constraintStart_toEndOf="@+id/imageView4"
+            app:layout_constraintStart_toEndOf="@+id/imageView_variety_item"
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
-            android:id="@+id/director"
+            android:id="@+id/director_variety_item"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
             android:layout_marginTop="12dp"
-            app:layout_constraintStart_toEndOf="@+id/imageView4"
-            app:layout_constraintTop_toBottomOf="@+id/name" />
+            app:layout_constraintStart_toEndOf="@+id/imageView_variety_item"
+            app:layout_constraintTop_toBottomOf="@+id/name_variety_item" />
 
         <TextView
-            android:id="@+id/actor"
+            android:id="@+id/actor_variety_item"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
             android:layout_marginTop="12dp"
-            app:layout_constraintStart_toEndOf="@+id/imageView4"
-            app:layout_constraintTop_toBottomOf="@+id/director" />
+            app:layout_constraintStart_toEndOf="@+id/imageView_variety_item"
+            app:layout_constraintTop_toBottomOf="@+id/director_variety_item" />
 
 
         <TextView
-            android:id="@+id/popularity"
+            android:id="@+id/popularity_variety_item"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
             android:layout_marginTop="12dp"
-            app:layout_constraintStart_toEndOf="@+id/imageView4"
-            app:layout_constraintTop_toBottomOf="@+id/actor" />
+            app:layout_constraintStart_toEndOf="@+id/imageView_variety_item"
+            app:layout_constraintTop_toBottomOf="@+id/actor_variety_item" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </com.google.android.material.card.MaterialCardView>

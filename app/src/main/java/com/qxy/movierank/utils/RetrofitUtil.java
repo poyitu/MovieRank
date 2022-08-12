@@ -20,11 +20,11 @@ public class RetrofitUtil {
 
     private static RetrofitUtil retrofitUtil = null;
     private String baseUrl = "https://open.douyin.com/";
-    private String client_key = "awcyzj4zg78lxoor";
-    private String client_secret = "89344f7bac7c59852681913f3c80becc";
+    private String client_key = "aw1o1jsnnkemujkv";
+    private String client_secret = "d7f2c83a35dae47bd834bb8a2b5248ca";
     private String grant_type = "client_credential";
 
-    public static String client_access_token = "clt.51c7c4139bc581d566def73b250f4095dK3vykeI2H37pGGpqx4pDfVRpxxp";
+    public static String client_access_token = "clt.aad8291f8a66c49199c25a7b7dc90eb71WQ5AvRnd5ZyqHZ53BUnde88p72z";
 
 
     public static RetrofitUtil getInstance(){
@@ -93,7 +93,7 @@ public class RetrofitUtil {
 
             @Override
             public void onFailure(Call<RankBean> call, Throwable t) {
-                Log.d("Retrofit测试", "发生错误");
+                Log.d("Retrofit测试", "发生错误111");
                 callBack.onFailed(t);
             }
 

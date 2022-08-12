@@ -1,14 +1,22 @@
 package com.qxy.movierank.ui;
 
 import android.os.Bundle;
-
-import androidx.fragment.app.Fragment;
-
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.qxy.movierank.R;
+import com.qxy.movierank.adapter.VarietyAdapter;
+import com.qxy.movierank.bean.RankBean;
+import com.qxy.movierank.utils.RetrofitUtil;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -25,6 +33,8 @@ public class VarietyShowFragment extends Fragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
+    private RecyclerView varietyShowRankRecyclerViewVariert;
+    private VarietyAdapter varietyAdapter;
 
     public VarietyShowFragment() {
         // Required empty public constructor
@@ -61,6 +71,46 @@ public class VarietyShowFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_variety_show, container, false);
+
+        View root = inflater.inflate(R.layout.fragment_variety_show, container, false);
+        initView(root);
+        initRecyclerView();
+        return root;
+    }
+
+    private void initView(View root) {
+        varietyShowRankRecyclerViewVariert = (RecyclerView) root.findViewById(R.id.varietyShowRank_RecyclerView_variert);
+    }
+
+
+    private void initRecyclerView(){
+        //设置布局管理器
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
+        linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
+        varietyShowRankRecyclerViewVariert.setLayoutManager(linearLayoutManager);
+        //设置适配器
+        varietyAdapter = new VarietyAdapter();
+        varietyShowRankRecyclerViewVariert.setAdapter(varietyAdapter);
+
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        RetrofitUtil.getInstance().getRank("3", "", new RetrofitUtil.CallBack() {
+            @Override
+            public void onSuccess(Object o) {
+                if(((RankBean)o).getData().getError_code() == 0){
+                    varietyAdapter.setData(((RankBean)o).getData().getList());
+                }else {
+                    Log.d("测试", "onSuccess: "+((RankBean)o).getData().getDescription());
+                }
+            }
+
+            @Override
+            public void onFailed(Throwable t) {
+
+            }
+        });
     }
 }

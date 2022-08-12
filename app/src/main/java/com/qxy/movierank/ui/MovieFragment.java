@@ -99,9 +99,9 @@ public class MovieFragment extends Fragment {
                 String json = o.toString();
                 Log.d(TAG, "json: " + json);
                 List<RankBean.DataDTO.ListDTO> rank_list = ((RankBean) o).getData().getList();
-                for (RankBean.DataDTO.ListDTO listDTO : rank_list) {
-                    Log.d(TAG, "onSuccess: " + listDTO.getName());
-                }
+//                for (RankBean.DataDTO.ListDTO listDTO : rank_list) {
+//                    Log.d(TAG, "onSuccess: " + listDTO.getName());
+//                }
                 mAdapter = new MovieAdapter(getActivity(), rank_list);
                 //mAdapter.setData(rank_list);
 

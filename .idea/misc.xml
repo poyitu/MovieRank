@@ -8,6 +8,11 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="..\:/AndroidStudioProjects/git/MovieRank/app/src/main/res/layout/activity_main.xml" value="0.1" />
+        <entry key="..\:/AndroidStudioProjects/git/MovieRank/app/src/main/res/layout/fragment_movie.xml" value="0.22760416666666666" />
+        <entry key="..\:/AndroidStudioProjects/git/MovieRank/app/src/main/res/layout/fragment_t_vseries.xml" value="0.22760416666666666" />
+        <entry key="..\:/AndroidStudioProjects/git/MovieRank/app/src/main/res/layout/fragment_variety_show.xml" value="0.22760416666666666" />
+        <entry key="..\:/AndroidStudioProjects/git/MovieRank/app/src/main/res/layout/variety_item.xml" value="0.22760416666666666" />
+        <entry key="..\:/AndroidStudioProjects/git/MovieRank/app/src/main/res/menu/bottom_nav_menu.xml" value="0.22760416666666666" />
         <entry key="..\:/javaCode/MovieRank/app/src/main/res/layout/fragment_movie.xml" value="0.34057971014492755" />
       </map>
     </option>

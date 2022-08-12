@@ -10,52 +10,76 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.qxy.movierank.R;
+import com.qxy.movierank.bean.RankBean;
+
+import java.util.ArrayList;
+import java.util.List;
 
 
-public class VarietyAdapter extends RecyclerView.Adapter<VarietyAdapter.MyViewholder> {
+public class VarietyAdapter extends RecyclerView.Adapter<VarietyAdapter.InnerHolder> {
 
+    private List<RankBean.DataDTO.ListDTO> mData = new ArrayList<>();
 
     @NonNull
     @Override
-    public MyViewholder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public InnerHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         LayoutInflater layoutInflater = LayoutInflater.from(parent.getContext());
         View itemView;
 
-        itemView = layoutInflater.inflate(R.layout.movie_item, parent, false);
-        return new MyViewholder(itemView);
+        itemView = layoutInflater.inflate(R.layout.variety_item, parent, false);
+        return new InnerHolder(itemView);
     }
 
 
     @Override
-    public void onBindViewHolder(@NonNull MyViewholder holder, int position) {
+    public void onBindViewHolder(@NonNull InnerHolder holder, int position) {
 
+        holder.itemView.setTag(position);
+        holder.setItemData(mData.get(position));
 
-        holder.itemView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-            }
-        });
     }
 
     @Override
     public int getItemCount() {
+        if(mData != null){
+            return mData.size();
+        }
         return 0;
     }
 
-    //Viewholder
-    static class MyViewholder extends RecyclerView.ViewHolder {
-        TextView tvMovieName, tvDirector, tvActor, tvTime, tvPopularity, tvRegion;
-        ImageView posterImageView;
 
-        public MyViewholder(@NonNull View itemView) {
+    public void setData(List<RankBean.DataDTO.ListDTO> varietyShowBeanList){
+        if(mData != null){
+            mData.clear();
+        }
+        mData.addAll(varietyShowBeanList);
+        //更新UI
+        notifyDataSetChanged();
+    }
+
+    //Viewholder
+    public class InnerHolder extends RecyclerView.ViewHolder {
+        private ImageView imageViewVarietyItem;
+        private TextView nameVarietyItem;
+        private TextView directorVarietyItem;
+        private TextView actorVarietyItem;
+        private TextView popularityVarietyItem;
+
+        public InnerHolder(@NonNull View itemView) {
             super(itemView);
-            tvMovieName = itemView.findViewById(R.id.movie_name);
-            tvDirector = itemView.findViewById(R.id.director);
-            tvActor = itemView.findViewById(R.id.actor);
-            tvTime = itemView.findViewById(R.id.time);
-            tvPopularity = itemView.findViewById(R.id.popularity);
-            tvRegion = itemView.findViewById(R.id.region);
-            posterImageView = itemView.findViewById(R.id.poster);
+            imageViewVarietyItem = (ImageView) itemView.findViewById(R.id.imageView_variety_item);
+            nameVarietyItem = (TextView) itemView.findViewById(R.id.name_variety_item);
+            directorVarietyItem = (TextView) itemView.findViewById(R.id.director_variety_item);
+            actorVarietyItem = (TextView) itemView.findViewById(R.id.actor_variety_item);
+            popularityVarietyItem = (TextView) itemView.findViewById(R.id.popularity_variety_item);
+        }
+
+        public void setItemData(RankBean.DataDTO.ListDTO varietyShowBean){
+
+            nameVarietyItem.setText(varietyShowBean.getName()+"");
+            directorVarietyItem.setText(varietyShowBean.getDirectors().toString()+"");
+//            actorVarietyItem.setText(varietyShowBean.getActors().toString()+"");
+            popularityVarietyItem.setText(varietyShowBean.getDiscussion_hot()+"");
         }
     }
 
