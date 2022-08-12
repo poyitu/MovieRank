@@ -7,22 +7,11 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
-        <entry key="..\:/AndroidStudioProjects/MovieRank/app/src/main/res/drawable/ic_dashboard_black_24dp.xml" value="0.1815" />
-        <entry key="..\:/AndroidStudioProjects/MovieRank/app/src/main/res/drawable/ic_home_black_24dp.xml" value="0.207" />
-        <entry key="..\:/AndroidStudioProjects/MovieRank/app/src/main/res/drawable/ic_launcher_background.xml" value="0.207" />
-        <entry key="..\:/AndroidStudioProjects/MovieRank/app/src/main/res/drawable/ic_notifications_black_24dp.xml" value="0.207" />
-        <entry key="..\:/AndroidStudioProjects/MovieRank/app/src/main/res/layout/activity_main.xml" value="0.33" />
-        <entry key="..\:/AndroidStudioProjects/MovieRank/app/src/main/res/layout/fragment_movie.xml" value="0.36614583333333334" />
-        <entry key="..\:/AndroidStudioProjects/MovieRank/app/src/main/res/layout/fragment_t_vseries.xml" value="0.36614583333333334" />
-        <entry key="..\:/AndroidStudioProjects/MovieRank/app/src/main/res/layout/fragment_variety_show.xml" value="0.36614583333333334" />
-        <entry key="..\:/AndroidStudioProjects/MovieRank/app/src/main/res/layout/movie_item.xml" value="0.36614583333333334" />
-        <entry key="..\:/AndroidStudioProjects/MovieRank/app/src/main/res/layout/tv_item.xml" value="0.36614583333333334" />
-        <entry key="..\:/AndroidStudioProjects/MovieRank/app/src/main/res/layout/variety_item.xml" value="0.36614583333333334" />
-        <entry key="..\:/AndroidStudioProjects/MovieRank/app/src/main/res/menu/bottom_nav_menu.xml" value="0.36614583333333334" />
+        <entry key="..\:/AndroidStudioProjects/git/MovieRank/app/src/main/res/layout/activity_main.xml" value="0.1" />
       </map>
     </option>
   </component>
-  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" default="true" project-jdk-name="Android Studio default JDK" project-jdk-type="JavaSDK">
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" default="true" project-jdk-name="11" project-jdk-type="JavaSDK">
     <output url="file://$PROJECT_DIR$/build/classes" />
   </component>
   <component name="ProjectType">

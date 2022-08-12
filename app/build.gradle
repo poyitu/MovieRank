@@ -45,4 +45,7 @@ dependencies {
     //集成到开发环境-
     implementation 'com.bytedance.ies.ugc.aweme:opensdk-china-external:0.1.9.0'
     implementation 'com.bytedance.ies.ugc.aweme:opensdk-common:0.1.9.0'
+
+    implementation 'com.squareup.retrofit2:retrofit:2.9.0'
+    implementation 'com.squareup.retrofit2:converter-gson:2.9.0'
 }
