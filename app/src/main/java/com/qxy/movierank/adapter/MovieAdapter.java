@@ -14,6 +14,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.qxy.movierank.MainActivity;
 import com.qxy.movierank.R;
 import com.qxy.movierank.bean.MovieBean;
@@ -31,9 +32,10 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MyViewholder
         this.context = context;
         this.beanArrayList = beanArrayList;
     }
+
     public MovieAdapter(Context context) {
         this.context = context;
-    
+
     }
 
     public void setData(List<RankBean.DataDTO.ListDTO> rankBeans) {
@@ -55,33 +57,27 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MyViewholder
     @Override
     public void onBindViewHolder(@NonNull MyViewholder holder, int position) {
         RankBean.DataDTO.ListDTO movie = beanArrayList.get(position);
+        Glide.with(context)
+                .load(movie.getPoster())
+                .error(R.mipmap.ic_launcher)
+                .into(holder.posterImageView);
         holder.tvMovieName.setText(movie.getName());
-        List<String> actors = movie.getActors();
-        if (null != actors) {
-            holder.tvActor.setText(actors.toString());
 
-        } else {
-            holder.tvActor.setText("");
+        String actors = "";
+        if (movie.getActors() != null) {
+            List actors_List = movie.getActors();
+            int count = 0;
+            for (Object o : actors_List) {
+                count++;
+                if (count > 3) break;
+                actors += o.toString() + " / ";
+            }
         }
-        List<String> directors = movie.getDirectors();
-        if (null != directors) {
-            holder.tvDirector.setText(directors.get(0));
-
-        } else {
-            holder.tvDirector.setText("");
-        }
-
-        holder.tvTime.setText(movie.getRelease_date());
-        if (0 != movie.getInfluence_hot()) {
-
-        }
-        holder.tvPopularity.setText(movie.getInfluence_hot()+"");
-        List<String> areas = movie.getAreas();
-        if (null != areas) {
-            holder.tvRegion.setText(areas.get(0));
-        } else {
-            holder.tvRegion.setText("");
-        }
+        holder.tvActor.setText(actors);
+        holder.tvDirector.setText(movie.getDirectors() == null ? "" : movie.getDirectors().toString() + "");
+        holder.tvTime.setText(movie.getRelease_date() == null ? "" : movie.getRelease_date() + "");
+        holder.tvPopularity.setText(movie.getInfluence_hot() + "");
+        holder.tvRegion.setText(movie.getAreas() == null ? "" : movie.getAreas().get(0) + "");
 
         // holder.itemView.setOnClickListener(new View.OnClickListener() {
         //     @Override

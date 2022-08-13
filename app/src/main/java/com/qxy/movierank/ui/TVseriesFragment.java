@@ -86,7 +86,7 @@ public class TVseriesFragment extends Fragment {
 
     private void initData() {
         RetrofitUtil retrofitUtil = RetrofitUtil.getInstance();
-        retrofitUtil.getRank("2", null, new RetrofitUtil.CallBack() {
+        retrofitUtil.getRank_Tomcat("2", null, new RetrofitUtil.CallBack() {
             @Override
             public void onSuccess(Object o) {
                 String json = o.toString();

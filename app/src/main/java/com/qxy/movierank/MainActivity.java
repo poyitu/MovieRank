@@ -40,7 +40,7 @@ public class MainActivity extends AppCompatActivity {
 
         switchFragment(mMovieFragment);
         mNavigationView.setOnItemSelectedListener(navView);
-       
+
     }
 
     private NavigationBarView.OnItemSelectedListener navView = new OnItemSelectedListener() {

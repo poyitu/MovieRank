@@ -93,7 +93,7 @@ public class MovieFragment extends Fragment {
 
     private void initData() {
         RetrofitUtil retrofitUtil = RetrofitUtil.getInstance();
-        retrofitUtil.getRank("1", null, new RetrofitUtil.CallBack() {
+        retrofitUtil.getRank_Tomcat("1", null, new RetrofitUtil.CallBack() {
             @Override
             public void onSuccess(Object o) {
                 String json = o.toString();
