@@ -61,6 +61,7 @@ public class VarietyAdapter extends RecyclerView.Adapter<VarietyAdapter.InnerHol
     public class InnerHolder extends RecyclerView.ViewHolder {
         private ImageView imageViewVarietyItem;
         private TextView nameVarietyItem;
+        private TextView nameEnVarietyItem;
         private TextView directorVarietyItem;
         private TextView actorVarietyItem;
         private TextView popularityVarietyItem;
@@ -69,6 +70,7 @@ public class VarietyAdapter extends RecyclerView.Adapter<VarietyAdapter.InnerHol
             super(itemView);
             imageViewVarietyItem = (ImageView) itemView.findViewById(R.id.imageView_variety_item);
             nameVarietyItem = (TextView) itemView.findViewById(R.id.name_variety_item);
+            nameEnVarietyItem = (TextView) itemView.findViewById(R.id.name_en_variety_item);
             directorVarietyItem = (TextView) itemView.findViewById(R.id.director_variety_item);
             actorVarietyItem = (TextView) itemView.findViewById(R.id.actor_variety_item);
             popularityVarietyItem = (TextView) itemView.findViewById(R.id.popularity_variety_item);
@@ -77,8 +79,20 @@ public class VarietyAdapter extends RecyclerView.Adapter<VarietyAdapter.InnerHol
         public void setItemData(RankBean.DataDTO.ListDTO varietyShowBean){
 
             nameVarietyItem.setText(varietyShowBean.getName()==null?"":varietyShowBean.getName()+"");
+            nameEnVarietyItem.setText(varietyShowBean.getName_en()==null?"":varietyShowBean.getName_en()+"");
             directorVarietyItem.setText(varietyShowBean.getDirectors()==null?"":varietyShowBean.getDirectors().toString()+"");
-            actorVarietyItem.setText(varietyShowBean.getActors()==null?"":varietyShowBean.getActors().toString());
+            String actors = "";
+            if(varietyShowBean.getActors() != null){
+                List actors_List = varietyShowBean.getActors();
+                int count = 0;
+                for (Object o : actors_List) {
+                    count++;
+                    if(count > 3) break;
+                    actors+=o.toString()+" / ";
+                }
+            }
+//            actorVarietyItem.setText(varietyShowBean.getActors()==null?"":varietyShowBean.getActors().toString());
+            actorVarietyItem.setText(actors);
 //            if (null!=varietyShowBean.getActors()){
 //                actorVarietyItem.setText(varietyShowBean.getActors().toString() + "");
 //
