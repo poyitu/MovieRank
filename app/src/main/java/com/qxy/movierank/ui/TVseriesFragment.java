@@ -95,7 +95,7 @@ public class TVseriesFragment extends Fragment {
 //                for (RankBean.DataDTO.ListDTO listDTO : rank_list) {
 //                    Log.d(TAG, "onSuccess: " + listDTO.getName());
 //                }
-                mAdapter = new TvAdapter(getActivity());
+
                 if (((RankBean) o).getData().getError_code() == 0) {
                     mAdapter.setData(rank_list);
                 } else {
@@ -119,6 +119,7 @@ public class TVseriesFragment extends Fragment {
 
         //将对象作为参数通过setAdapter方法设置给recylerview；
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+        mAdapter = new TvAdapter(getActivity());
         mRecyclerView.setAdapter(mAdapter);
         //这步骤必须有，这是选择RecylerView的显示方式
     }

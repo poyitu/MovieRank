@@ -14,6 +14,7 @@ import com.bumptech.glide.Glide;
 import com.qxy.movierank.R;
 import com.qxy.movierank.bean.RankBean;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -45,7 +46,7 @@ public class TvAdapter extends RecyclerView.Adapter<TvAdapter.MyViewholder> {
     public void onBindViewHolder(@NonNull MyViewholder holder, int position) {
         RankBean.DataDTO.ListDTO movie = beanArrayList.get(position);
 
-        Glide.with(context)
+        Glide.with(holder.itemView.getContext())
                 .load(movie.getPoster())
                 .error(R.mipmap.ic_launcher)
                 .into(holder.posterImageView);
@@ -66,7 +67,8 @@ public class TvAdapter extends RecyclerView.Adapter<TvAdapter.MyViewholder> {
 
         holder.tvDirector.setText(movie.getDirectors() == null ? "" : movie.getDirectors().toString() + "");
         holder.tvTime.setText(movie.getRelease_date());
-        holder.tvPopularity.setText(movie.getInfluence_hot() + "");
+        double v = new BigDecimal( movie.getHot()).divide(new BigDecimal(10000)).setScale(1, BigDecimal.ROUND_HALF_UP).doubleValue();
+        holder.tvPopularity.setText(v + "万");
         List<String> areas = movie.getAreas();
         if (null != areas) {
             holder.tvRegion.setText(areas.get(0));

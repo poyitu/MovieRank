@@ -20,6 +20,7 @@ import com.qxy.movierank.R;
 import com.qxy.movierank.bean.MovieBean;
 import com.qxy.movierank.bean.RankBean;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -76,7 +77,8 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MyViewholder
         holder.tvActor.setText(actors);
         holder.tvDirector.setText(movie.getDirectors() == null ? "" : movie.getDirectors().toString() + "");
         holder.tvTime.setText(movie.getRelease_date() == null ? "" : movie.getRelease_date() + "");
-        holder.tvPopularity.setText(movie.getInfluence_hot() + "");
+        double v = new BigDecimal( movie.getHot()).divide(new BigDecimal(10000)).setScale(1, BigDecimal.ROUND_HALF_UP).doubleValue();
+        holder.tvPopularity.setText(v + "万");
         holder.tvRegion.setText(movie.getAreas() == null ? "" : movie.getAreas().get(0) + "");
 
         // holder.itemView.setOnClickListener(new View.OnClickListener() {

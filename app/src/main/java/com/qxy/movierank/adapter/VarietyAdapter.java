@@ -14,6 +14,7 @@ import com.bumptech.glide.Glide;
 import com.qxy.movierank.R;
 import com.qxy.movierank.bean.RankBean;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -105,7 +106,8 @@ public class VarietyAdapter extends RecyclerView.Adapter<VarietyAdapter.InnerHol
 //                actorVarietyItem.setText("");
 //
 //            }
-            popularityVarietyItem.setText(varietyShowBean.getDiscussion_hot() + "");
+            double v = new BigDecimal(varietyShowBean.getHot()).divide(new BigDecimal(10000)).setScale(1, BigDecimal.ROUND_HALF_UP).doubleValue();
+            popularityVarietyItem.setText(v + "万");
         }
     }
 
