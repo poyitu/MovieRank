@@ -74,12 +74,12 @@ public class TVseriesFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         if (root == null) {
-            //»ñµÃ²¼¾ÖÎÄ¼ş
+            //è·å¾—å¸ƒå±€æ–‡ä»¶
             root = inflater.inflate((R.layout.fragment_movie), container, false);
         }
-        //³õÊ¼»¯RecylerView×é¼şµÄ·½·¨
+        //åˆå§‹åŒ–RecylerViewç»„ä»¶çš„æ–¹æ³•
         initRecyclerview();
-        //³õÊ¼»¯Êı¾İ
+        //åˆå§‹åŒ–æ•°æ®
         initData();
         return root;
     }
@@ -99,7 +99,7 @@ public class TVseriesFragment extends Fragment {
                 if (((RankBean) o).getData().getError_code() == 0) {
                     mAdapter.setData(rank_list);
                 } else {
-                    Log.d("²âÊÔ", "onSuccess: " + ((RankBean) o).getData().getDescription());
+                    Log.d("æµ‹è¯•", "onSuccess: " + ((RankBean) o).getData().getDescription());
                 }
 
                 // mAdapter = new MovieAdapter(getActivity(), rank_list);
@@ -115,11 +115,11 @@ public class TVseriesFragment extends Fragment {
 
     private void initRecyclerview() {
         mRecyclerView = (RecyclerView) root.findViewById(R.id.tv1);
-        //´´½¨adapterÀàµÄ¶ÔÏó
+        //åˆ›å»ºadapterç±»çš„å¯¹è±¡
 
-        //½«¶ÔÏó×÷Îª²ÎÊıÍ¨¹ısetAdapter·½·¨ÉèÖÃ¸ørecylerview£»
+        //å°†å¯¹è±¡ä½œä¸ºå‚æ•°é€šè¿‡setAdapteræ–¹æ³•è®¾ç½®ç»™recylerviewï¼›
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         mRecyclerView.setAdapter(mAdapter);
-        //Õâ²½Öè±ØĞëÓĞ£¬ÕâÊÇÑ¡ÔñRecylerViewµÄÏÔÊ¾·½Ê½
+        //è¿™æ­¥éª¤å¿…é¡»æœ‰ï¼Œè¿™æ˜¯é€‰æ‹©RecylerViewçš„æ˜¾ç¤ºæ–¹å¼
     }
 }
