@@ -66,10 +66,20 @@
 
 
         <TextView
+            android:id="@+id/release_date_variety_item"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="6dp"
+            android:text="播出日期"
+            app:layout_constraintEnd_toEndOf="@+id/popularity_variety_item"
+            app:layout_constraintStart_toStartOf="@+id/actor_variety_item"
+            app:layout_constraintTop_toBottomOf="@+id/actor_variety_item" />
+
+        <TextView
             android:id="@+id/popularity_variety_item"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:text="1111"
+            android:text="热度"
             app:layout_constraintBottom_toBottomOf="@+id/imageView3"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/imageView3"
@@ -81,7 +91,7 @@
             android:layout_height="24dp"
             android:layout_marginTop="6dp"
             app:layout_constraintStart_toStartOf="@+id/actor_variety_item"
-            app:layout_constraintTop_toBottomOf="@+id/actor_variety_item"
+            app:layout_constraintTop_toBottomOf="@+id/release_date_variety_item"
             app:srcCompat="@drawable/hot" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </com.google.android.material.card.MaterialCardView>

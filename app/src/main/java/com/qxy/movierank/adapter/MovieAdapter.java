@@ -64,19 +64,37 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MyViewholder
                 .into(holder.posterImageView);
         holder.tvMovieName.setText(movie.getName());
 
+        //演员列表，显示前3
         String actors = "";
         if (movie.getActors() != null) {
-            List actors_List = movie.getActors();
+            List<String> actors_List = movie.getActors();
             int count = 0;
-            for (Object o : actors_List) {
+            for (String actor : actors_List) {
+                actors += actor;
+                if(count != 2 || count == actors_List.size()-1){
+                    actors +=" / ";
+                }
                 count++;
-                if (count > 3) break;
-                actors += o.toString() + " / ";
+                if (count > 2) break;
             }
         }
         holder.tvActor.setText(actors);
-        holder.tvDirector.setText(movie.getDirectors() == null ? "" : movie.getDirectors().toString() + "");
-        holder.tvTime.setText(movie.getRelease_date() == null ? "" : movie.getRelease_date() + "");
+        //导演
+        String dirctors = "";
+        if(movie.getDirectors() != null){
+            List<String> dirctors_List = movie.getDirectors();
+            int count = 0;
+            for (String dirctor : dirctors_List) {
+                dirctors += dirctor;
+                if(count != 2 && count!=dirctors_List.size()-1){
+                    dirctors += " / ";
+                }
+                count++;
+                if(count > 2)break;
+            }
+        }
+        holder.tvDirector.setText(dirctors);
+        holder.tvTime.setText(movie.getRelease_date() == null ? "" : movie.getRelease_date() + " 上映");
         double v = new BigDecimal( movie.getHot()).divide(new BigDecimal(10000)).setScale(1, BigDecimal.ROUND_HALF_UP).doubleValue();
         holder.tvPopularity.setText(v + "万");
         holder.tvRegion.setText(movie.getAreas() == null ? "" : movie.getAreas().get(0) + "");

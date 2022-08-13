@@ -67,6 +67,7 @@ public class VarietyAdapter extends RecyclerView.Adapter<VarietyAdapter.InnerHol
         private TextView nameEnVarietyItem;
         private TextView directorVarietyItem;
         private TextView actorVarietyItem;
+        private TextView releasedateVarietyItem;
         private TextView popularityVarietyItem;
 
         public InnerHolder(@NonNull View itemView) {
@@ -76,6 +77,7 @@ public class VarietyAdapter extends RecyclerView.Adapter<VarietyAdapter.InnerHol
             nameEnVarietyItem = (TextView) itemView.findViewById(R.id.name_en_variety_item);
             directorVarietyItem = (TextView) itemView.findViewById(R.id.director_variety_item);
             actorVarietyItem = (TextView) itemView.findViewById(R.id.actor_variety_item);
+            releasedateVarietyItem= (TextView) itemView.findViewById(R.id.release_date_variety_item);
             popularityVarietyItem = (TextView) itemView.findViewById(R.id.popularity_variety_item);
         }
 
@@ -117,6 +119,10 @@ public class VarietyAdapter extends RecyclerView.Adapter<VarietyAdapter.InnerHol
             }
             actorVarietyItem.setText(actors);
 
+            //播出日期
+            releasedateVarietyItem.setText(varietyShowBean.getRelease_date()==null?"":varietyShowBean.getRelease_date()+" 播出");
+
+            //热度（单位：万）
             double v = new BigDecimal(varietyShowBean.getHot()).divide(new BigDecimal(10000)).setScale(1, BigDecimal.ROUND_HALF_UP).doubleValue();
             popularityVarietyItem.setText(v + "万");
         }
