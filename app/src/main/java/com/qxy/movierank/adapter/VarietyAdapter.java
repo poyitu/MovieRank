@@ -88,7 +88,7 @@ public class VarietyAdapter extends RecyclerView.Adapter<VarietyAdapter.InnerHol
                 for (Object o : actors_List) {
                     count++;
                     if(count > 3) break;
-                    actors+=o.toString()+" / ";
+                    actors += o.toString()+" / ";
                 }
             }
 //            actorVarietyItem.setText(varietyShowBean.getActors()==null?"":varietyShowBean.getActors().toString());

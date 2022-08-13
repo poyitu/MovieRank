@@ -49,6 +49,7 @@
             android:id="@+id/director_variety_item"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_marginTop="6dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="@+id/name_en_variety_item"
             app:layout_constraintTop_toBottomOf="@+id/name_en_variety_item" />
@@ -57,7 +58,7 @@
             android:id="@+id/actor_variety_item"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="12dp"
+            android:layout_marginTop="6dp"
             android:singleLine="true"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="@+id/director_variety_item"
@@ -68,7 +69,7 @@
             android:id="@+id/popularity_variety_item"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="12dp"
+            android:layout_marginTop="6dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="@+id/actor_variety_item"
             app:layout_constraintTop_toBottomOf="@+id/actor_variety_item" />
