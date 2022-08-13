@@ -1,5 +1,6 @@
 package com.qxy.movierank.adapter;
 
+import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,6 +10,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.qxy.movierank.R;
 import com.qxy.movierank.bean.RankBean;
 
@@ -17,13 +19,14 @@ import java.util.List;
 
 
 public class VarietyAdapter extends RecyclerView.Adapter<VarietyAdapter.InnerHolder> {
-
+    private Context mContext;
     private List<RankBean.DataDTO.ListDTO> mData = new ArrayList<>();
 
     @NonNull
     @Override
     public InnerHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         LayoutInflater layoutInflater = LayoutInflater.from(parent.getContext());
+        mContext = parent.getContext();
         View itemView;
 
         itemView = layoutInflater.inflate(R.layout.variety_item, parent, false);
@@ -41,15 +44,15 @@ public class VarietyAdapter extends RecyclerView.Adapter<VarietyAdapter.InnerHol
 
     @Override
     public int getItemCount() {
-        if(mData != null){
+        if (mData != null) {
             return mData.size();
         }
         return 0;
     }
 
 
-    public void setData(List<RankBean.DataDTO.ListDTO> varietyShowBeanList){
-        if(mData != null){
+    public void setData(List<RankBean.DataDTO.ListDTO> varietyShowBeanList) {
+        if (mData != null) {
             mData.clear();
         }
         mData.addAll(varietyShowBeanList);
@@ -74,11 +77,14 @@ public class VarietyAdapter extends RecyclerView.Adapter<VarietyAdapter.InnerHol
             popularityVarietyItem = (TextView) itemView.findViewById(R.id.popularity_variety_item);
         }
 
-        public void setItemData(RankBean.DataDTO.ListDTO varietyShowBean){
-
-            nameVarietyItem.setText(varietyShowBean.getName()==null?"":varietyShowBean.getName()+"");
-            directorVarietyItem.setText(varietyShowBean.getDirectors()==null?"":varietyShowBean.getDirectors().toString()+"");
-            actorVarietyItem.setText(varietyShowBean.getActors()==null?"":varietyShowBean.getActors().toString());
+        public void setItemData(RankBean.DataDTO.ListDTO varietyShowBean) {
+            Glide.with(mContext)
+                    .load(varietyShowBean.getPoster())
+                    .error(R.mipmap.ic_launcher)
+                    .into(imageViewVarietyItem);
+            nameVarietyItem.setText(varietyShowBean.getName() == null ? "" : varietyShowBean.getName() + "");
+            directorVarietyItem.setText(varietyShowBean.getDirectors() == null ? "" : varietyShowBean.getDirectors().toString() + "");
+            actorVarietyItem.setText(varietyShowBean.getActors() == null ? "" : varietyShowBean.getActors().toString());
 //            if (null!=varietyShowBean.getActors()){
 //                actorVarietyItem.setText(varietyShowBean.getActors().toString() + "");
 //
