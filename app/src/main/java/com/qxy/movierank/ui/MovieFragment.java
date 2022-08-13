@@ -93,7 +93,7 @@ public class MovieFragment extends Fragment {
 
     private void initData() {
         RetrofitUtil retrofitUtil = RetrofitUtil.getInstance();
-        retrofitUtil.getRank(String.valueOf(1), null, new RetrofitUtil.CallBack() {
+        retrofitUtil.getRank("1", null, new RetrofitUtil.CallBack() {
             @Override
             public void onSuccess(Object o) {
                 String json = o.toString();
@@ -102,8 +102,14 @@ public class MovieFragment extends Fragment {
 //                for (RankBean.DataDTO.ListDTO listDTO : rank_list) {
 //                    Log.d(TAG, "onSuccess: " + listDTO.getName());
 //                }
-                mAdapter = new MovieAdapter(getActivity(), rank_list);
-                //mAdapter.setData(rank_list);
+                mAdapter = new MovieAdapter(getActivity());
+                if (((RankBean) o).getData().getError_code() == 0) {
+                    mAdapter.setData(rank_list);
+                } else {
+                    Log.d("测试", "onSuccess: " + ((RankBean) o).getData().getDescription());
+                }
+
+                // mAdapter = new MovieAdapter(getActivity(), rank_list);
 
             }
 

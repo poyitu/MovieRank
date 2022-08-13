@@ -25,15 +25,20 @@ import java.util.List;
 
 public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MyViewholder> {
     private Context context;
-    private List<RankBean.DataDTO.ListDTO> beanArrayList;
+    private List<RankBean.DataDTO.ListDTO> beanArrayList = new ArrayList<>();
 
     public MovieAdapter(Context context, List<RankBean.DataDTO.ListDTO> beanArrayList) {
         this.context = context;
         this.beanArrayList = beanArrayList;
     }
+    public MovieAdapter(Context context) {
+        this.context = context;
+    
+    }
 
     public void setData(List<RankBean.DataDTO.ListDTO> rankBeans) {
         beanArrayList = rankBeans;
+        notifyDataSetChanged();
     }
 
     @NonNull
@@ -51,16 +56,38 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MyViewholder
     public void onBindViewHolder(@NonNull MyViewholder holder, int position) {
         RankBean.DataDTO.ListDTO movie = beanArrayList.get(position);
         holder.tvMovieName.setText(movie.getName());
-        //holder.tvActor.setText((CharSequence) movie.getActors());
-        //holder.tvDirector.setText((CharSequence) movie.getDirectors());
-        //holder.tvTime.setText(movie.getRelease_date());
-        //holder.tvPopularity.setText(movie.getSearch_hot());
-        //holder.tvRegion.setText(movie.getRelease_date());
-        holder.itemView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-            }
-        });
+        List<String> actors = movie.getActors();
+        if (null != actors) {
+            holder.tvActor.setText(actors.toString());
+
+        } else {
+            holder.tvActor.setText("");
+        }
+        List<String> directors = movie.getDirectors();
+        if (null != directors) {
+            holder.tvDirector.setText(directors.get(0));
+
+        } else {
+            holder.tvDirector.setText("");
+        }
+
+        holder.tvTime.setText(movie.getRelease_date());
+        if (0 != movie.getInfluence_hot()) {
+
+        }
+        holder.tvPopularity.setText(movie.getInfluence_hot()+"");
+        List<String> areas = movie.getAreas();
+        if (null != areas) {
+            holder.tvRegion.setText(areas.get(0));
+        } else {
+            holder.tvRegion.setText("");
+        }
+
+        // holder.itemView.setOnClickListener(new View.OnClickListener() {
+        //     @Override
+        //     public void onClick(View v) {
+        //     }
+        // });
     }
 
     @Override

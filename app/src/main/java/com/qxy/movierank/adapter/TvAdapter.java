@@ -1,5 +1,6 @@
 package com.qxy.movierank.adapter;
 
+import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,10 +11,23 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.qxy.movierank.R;
+import com.qxy.movierank.bean.RankBean;
 
+import java.util.ArrayList;
+import java.util.List;
 
 public class TvAdapter extends RecyclerView.Adapter<TvAdapter.MyViewholder> {
+    private Context context;
+    private List<RankBean.DataDTO.ListDTO> beanArrayList = new ArrayList<>();
 
+    public TvAdapter(Context context) {
+        this.context = context;
+    }
+
+    public void setData(List<RankBean.DataDTO.ListDTO> rankBeans) {
+        beanArrayList = rankBeans;
+        notifyDataSetChanged();
+    }
 
     @NonNull
     @Override
@@ -21,7 +35,7 @@ public class TvAdapter extends RecyclerView.Adapter<TvAdapter.MyViewholder> {
         LayoutInflater layoutInflater = LayoutInflater.from(parent.getContext());
         View itemView;
 
-        itemView = layoutInflater.inflate(R.layout.movie_item, parent, false);
+        itemView = layoutInflater.inflate(R.layout.tv_item, parent, false);
         return new MyViewholder(itemView);
     }
 
@@ -29,12 +43,35 @@ public class TvAdapter extends RecyclerView.Adapter<TvAdapter.MyViewholder> {
     @Override
     public void onBindViewHolder(@NonNull MyViewholder holder, int position) {
 
+        RankBean.DataDTO.ListDTO movie = beanArrayList.get(position);
+        holder.tvMovieName.setText(movie.getName());
+        List<String> actors = movie.getActors();
+        if (null != actors) {
+            holder.tvActor.setText(actors.toString());
 
-        holder.itemView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-            }
-        });
+        } else {
+            holder.tvActor.setText("");
+        }
+        List<String> directors = movie.getDirectors();
+        if (null != directors) {
+            holder.tvDirector.setText(directors.get(0));
+
+        } else {
+            holder.tvDirector.setText("");
+        }
+
+        holder.tvTime.setText(movie.getRelease_date());
+        if (0 != movie.getInfluence_hot()) {
+
+        }
+        holder.tvPopularity.setText(movie.getInfluence_hot()+"");
+        List<String> areas = movie.getAreas();
+        if (null != areas) {
+            holder.tvRegion.setText(areas.get(0));
+        } else {
+            holder.tvRegion.setText("");
+        }
+
     }
 
     @Override
@@ -49,7 +86,7 @@ public class TvAdapter extends RecyclerView.Adapter<TvAdapter.MyViewholder> {
 
         public MyViewholder(@NonNull View itemView) {
             super(itemView);
-            tvMovieName = itemView.findViewById(R.id.movie_name);
+            tvMovieName = itemView.findViewById(R.id.name);
             tvDirector = itemView.findViewById(R.id.director);
             tvActor = itemView.findViewById(R.id.actor);
             tvTime = itemView.findViewById(R.id.time);

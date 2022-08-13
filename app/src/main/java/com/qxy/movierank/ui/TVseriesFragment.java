@@ -3,12 +3,22 @@ package com.qxy.movierank.ui;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.qxy.movierank.R;
+import com.qxy.movierank.adapter.MovieAdapter;
+import com.qxy.movierank.adapter.TvAdapter;
+import com.qxy.movierank.bean.RankBean;
+import com.qxy.movierank.utils.RetrofitUtil;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -16,15 +26,17 @@ import com.qxy.movierank.R;
  * create an instance of this fragment.
  */
 public class TVseriesFragment extends Fragment {
-
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
+    private static final String TAG = "TVseriesFragment";
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
 
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
+    private View root;
+    private RecyclerView mRecyclerView;
+    private TvAdapter mAdapter;
+    private ArrayList<RankBean.DataDTO.ListDTO> beanArrayList = new ArrayList<>();
 
     public TVseriesFragment() {
         // Required empty public constructor
@@ -61,6 +73,53 @@ public class TVseriesFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_t_vseries, container, false);
+        if (root == null) {
+            //获得布局文件
+            root = inflater.inflate((R.layout.fragment_movie), container, false);
+        }
+        //初始化RecylerView组件的方法
+        initRecyclerview();
+        //初始化数据
+        initData();
+        return root;
+    }
+
+    private void initData() {
+        RetrofitUtil retrofitUtil = RetrofitUtil.getInstance();
+        retrofitUtil.getRank("2", null, new RetrofitUtil.CallBack() {
+            @Override
+            public void onSuccess(Object o) {
+                String json = o.toString();
+                Log.d(TAG, "json: " + json);
+                List<RankBean.DataDTO.ListDTO> rank_list = ((RankBean) o).getData().getList();
+//                for (RankBean.DataDTO.ListDTO listDTO : rank_list) {
+//                    Log.d(TAG, "onSuccess: " + listDTO.getName());
+//                }
+                mAdapter = new TvAdapter(getActivity());
+                if (((RankBean) o).getData().getError_code() == 0) {
+                    mAdapter.setData(rank_list);
+                } else {
+                    Log.d("测试", "onSuccess: " + ((RankBean) o).getData().getDescription());
+                }
+
+                // mAdapter = new MovieAdapter(getActivity(), rank_list);
+
+            }
+
+            @Override
+            public void onFailed(Throwable t) {
+
+            }
+        });
+    }
+
+    private void initRecyclerview() {
+        mRecyclerView = (RecyclerView) root.findViewById(R.id.tv1);
+        //创建adapter类的对象
+
+        //将对象作为参数通过setAdapter方法设置给recylerview；
+        mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+        mRecyclerView.setAdapter(mAdapter);
+        //这步骤必须有，这是选择RecylerView的显示方式
     }
 }

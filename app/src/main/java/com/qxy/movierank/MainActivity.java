@@ -38,8 +38,9 @@ public class MainActivity extends AppCompatActivity {
         mTVseriesFragment = new TVseriesFragment();
         mVarietyShowFragment = new VarietyShowFragment();
 
-        mNavigationView.setOnItemSelectedListener(navView);
         switchFragment(mMovieFragment);
+        mNavigationView.setOnItemSelectedListener(navView);
+       
     }
 
     private NavigationBarView.OnItemSelectedListener navView = new OnItemSelectedListener() {

@@ -24,7 +24,7 @@ public class RetrofitUtil {
     private String client_secret = "d7f2c83a35dae47bd834bb8a2b5248ca";
     private String grant_type = "client_credential";
 
-    public static String client_access_token = "clt.43d243a2c730b9fec1fabacbf098cb75439hyVU3rJjeXli88FSBVYtcLjHQ";
+    public static String client_access_token = "clt.bb51048f4f20a105fe001804153389aed2vNkiLKgo3yoGZGrtQ1bcvudHMm";
 
 
     public static RetrofitUtil getInstance(){
