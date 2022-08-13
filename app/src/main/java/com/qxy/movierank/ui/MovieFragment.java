@@ -98,18 +98,15 @@ public class MovieFragment extends Fragment {
             public void onSuccess(Object o) {
                 String json = o.toString();
                 Log.d(TAG, "json: " + json);
-                List<RankBean.DataDTO.ListDTO> rank_list = ((RankBean) o).getData().getList();
-//                for (RankBean.DataDTO.ListDTO listDTO : rank_list) {
-//                    Log.d(TAG, "onSuccess: " + listDTO.getName());
-//                }
-                mAdapter = new MovieAdapter(getActivity());
+                List<RankBean.DataDTO.ListDTO> rank_list = new ArrayList<>();
+
                 if (((RankBean) o).getData().getError_code() == 0) {
+                    rank_list = ((RankBean)o).getData().getList();
                     mAdapter.setData(rank_list);
                 } else {
                     Log.d("测试", "onSuccess: " + ((RankBean) o).getData().getDescription());
                 }
 
-                // mAdapter = new MovieAdapter(getActivity(), rank_list);
 
             }
 
@@ -126,6 +123,7 @@ public class MovieFragment extends Fragment {
 
         //将对象作为参数通过setAdapter方法设置给recylerview；
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+        mAdapter = new MovieAdapter(getActivity());
         mRecyclerView.setAdapter(mAdapter);
         //这步骤必须有，这是选择RecylerView的显示方式
 

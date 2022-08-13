@@ -104,7 +104,7 @@ public class RetrofitUtil {
 
     public void getRank_Tomcat(String type,String version,CallBack callBack){
         Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl("http://192.168.0.105:3000/")
+                .baseUrl("http://192.168.3.30:8080/project/")
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
         AppService appService = retrofit.create(AppService.class);
