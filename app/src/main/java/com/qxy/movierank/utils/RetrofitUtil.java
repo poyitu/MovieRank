@@ -158,7 +158,7 @@ public class RetrofitUtil {
 
 
     public interface CallBack {
-        void onSuccess(Object o);
+        void onSuccess(Object obj);
         void onFailed(Throwable t);
     }
 }

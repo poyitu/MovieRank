@@ -7,13 +7,17 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.qxy.movierank.R;
 import com.qxy.movierank.adapter.VarietyAdapter;
 import com.qxy.movierank.bean.RankBean;
+import com.qxy.movierank.contracts.VarietyShowContract;
 import com.qxy.movierank.utils.RetrofitUtil;
+import com.qxy.movierank.viewmodel.VarietyShowViewModel;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -23,7 +27,7 @@ import java.util.List;
  * Use the {@link VarietyShowFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class VarietyShowFragment extends Fragment {
+public class VarietyShowFragment extends Fragment implements VarietyShowContract.View {
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -35,6 +39,8 @@ public class VarietyShowFragment extends Fragment {
     private String mParam2;
     private RecyclerView varietyShowRankRecyclerViewVariert;
     private VarietyAdapter varietyAdapter;
+
+    private VarietyShowViewModel varietyShowViewModel;
 
     public VarietyShowFragment() {
         // Required empty public constructor
@@ -73,8 +79,11 @@ public class VarietyShowFragment extends Fragment {
         // Inflate the layout for this fragment
 
         View root = inflater.inflate(R.layout.fragment_variety_show, container, false);
+        varietyShowViewModel = new ViewModelProvider(getActivity()).get(VarietyShowViewModel.class);
+
         initView(root);
         initRecyclerView();
+        initObserveData();
         return root;
     }
 
@@ -94,23 +103,26 @@ public class VarietyShowFragment extends Fragment {
 
     }
 
+    private void initObserveData(){
+        varietyShowViewModel.getmVarietyBeanList().observe(getViewLifecycleOwner(), new Observer<List<RankBean.DataDTO.ListDTO>>() {
+            @Override
+            public void onChanged(List<RankBean.DataDTO.ListDTO> listDTOS) {
+                showVarietyRank(listDTOS);
+            }
+        });
+
+    }
+
     @Override
     public void onStart() {
         super.onStart();
-        RetrofitUtil.getInstance().getRank_Tomcat("3", "", new RetrofitUtil.CallBack() {
-            @Override
-            public void onSuccess(Object o) {
-                if(((RankBean)o).getData().getError_code() == 0){
-                    varietyAdapter.setData(((RankBean)o).getData().getList());
-                }else {
-                    Log.d("测试", "onSuccess: "+((RankBean)o).getData().getDescription());
-                }
-            }
+        //加载综艺榜数据
+        varietyShowViewModel.loadVarietyRank();
+    }
 
-            @Override
-            public void onFailed(Throwable t) {
+    @Override
+    public void showVarietyRank(List<RankBean.DataDTO.ListDTO> varietyShowBeanList) {
+        varietyAdapter.setData(varietyShowBeanList);
 
-            }
-        });
     }
 }
