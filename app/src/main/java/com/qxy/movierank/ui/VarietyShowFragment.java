@@ -97,7 +97,7 @@ public class VarietyShowFragment extends Fragment {
     @Override
     public void onStart() {
         super.onStart();
-        RetrofitUtil.getInstance().getRank("3", "", new RetrofitUtil.CallBack() {
+        RetrofitUtil.getInstance().getRank_Tomcat("3", "", new RetrofitUtil.CallBack() {
             @Override
             public void onSuccess(Object o) {
                 if(((RankBean)o).getData().getError_code() == 0){

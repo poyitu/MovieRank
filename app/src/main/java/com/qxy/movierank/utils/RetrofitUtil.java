@@ -24,7 +24,7 @@ public class RetrofitUtil {
     private String client_secret = "d7f2c83a35dae47bd834bb8a2b5248ca";
     private String grant_type = "client_credential";
 
-    public static String client_access_token = "clt.bb51048f4f20a105fe001804153389aed2vNkiLKgo3yoGZGrtQ1bcvudHMm";
+    public static String client_access_token = "clt.f2b461c1230c3457ce9f6155eba51958mwpHsQoiEtHcAVyX1hwzCLrZvhYt";
 
 
     public static RetrofitUtil getInstance(){
@@ -84,6 +84,31 @@ public class RetrofitUtil {
                 .build();
         AppService appService = retrofit.create(AppService.class);
         appService.getRankData(client_access_token,type,version).enqueue(new Callback<RankBean>() {
+            @Override
+            public void onResponse(Call<RankBean> call, Response<RankBean> response) {
+                Log.d("Retrofit测试", "收到响应");
+                callBack.onSuccess(response.body());
+
+            }
+
+            @Override
+            public void onFailure(Call<RankBean> call, Throwable t) {
+                Log.d("Retrofit测试", "发生错误111");
+                callBack.onFailed(t);
+            }
+
+        });
+    }
+
+
+
+    public void getRank_Tomcat(String type,String version,CallBack callBack){
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl("http://192.168.3.30:8080/project/")
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+        AppService appService = retrofit.create(AppService.class);
+        appService.getRankData_Tomcat().enqueue(new Callback<RankBean>() {
             @Override
             public void onResponse(Call<RankBean> call, Response<RankBean> response) {
                 Log.d("Retrofit测试", "收到响应");
