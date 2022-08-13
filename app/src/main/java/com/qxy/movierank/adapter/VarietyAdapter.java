@@ -80,32 +80,43 @@ public class VarietyAdapter extends RecyclerView.Adapter<VarietyAdapter.InnerHol
         }
 
         public void setItemData(RankBean.DataDTO.ListDTO varietyShowBean) {
+            String actors = "";
+            String dirctors = "";
             Glide.with(mContext)
                     .load(varietyShowBean.getPoster())
                     .error(R.mipmap.ic_launcher)
                     .into(imageViewVarietyItem);
             nameVarietyItem.setText(varietyShowBean.getName() == null ? "" : varietyShowBean.getName() + "");
             nameEnVarietyItem.setText(varietyShowBean.getName_en() == null ? "" : varietyShowBean.getName_en() + "");
-            directorVarietyItem.setText(varietyShowBean.getDirectors() == null ? "" : varietyShowBean.getDirectors().toString() + "");
-            String actors = "";
-            if (varietyShowBean.getActors() != null) {
-                List actors_List = varietyShowBean.getActors();
+            //导演
+            if(varietyShowBean.getDirectors() != null){
+                List<String> dirctors_List = varietyShowBean.getDirectors();
                 int count = 0;
-                for (Object o : actors_List) {
+                for (String dirctor : dirctors_List) {
+                    dirctors += dirctor;
+                    if(count != 2 && count!=dirctors_List.size()-1){
+                        dirctors += " / ";
+                    }
                     count++;
-                    if (count > 3) break;
-                    actors += o.toString() + " / ";
+                    if(count > 2)break;
                 }
             }
-//            actorVarietyItem.setText(varietyShowBean.getActors()==null?"":varietyShowBean.getActors().toString());
+            directorVarietyItem.setText(dirctors);
+            //演员列表，显示前3
+            if (varietyShowBean.getActors() != null) {
+                List<String> actors_List = varietyShowBean.getActors();
+                int count = 0;
+                for (String actor : actors_List) {
+                    actors += actor;
+                    if(count != 2 || count == actors_List.size()-1){
+                        actors +=" / ";
+                    }
+                    count++;
+                    if (count > 2) break;
+                }
+            }
             actorVarietyItem.setText(actors);
-//            if (null!=varietyShowBean.getActors()){
-//                actorVarietyItem.setText(varietyShowBean.getActors().toString() + "");
-//
-//            }else {
-//                actorVarietyItem.setText("");
-//
-//            }
+
             double v = new BigDecimal(varietyShowBean.getHot()).divide(new BigDecimal(10000)).setScale(1, BigDecimal.ROUND_HALF_UP).doubleValue();
             popularityVarietyItem.setText(v + "万");
         }

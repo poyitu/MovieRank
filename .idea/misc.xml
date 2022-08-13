@@ -11,14 +11,12 @@
         <entry key="..\:/AndroidStudioProjects/git/MovieRank/app/src/main/res/layout/fragment_movie.xml" value="0.22760416666666666" />
         <entry key="..\:/AndroidStudioProjects/git/MovieRank/app/src/main/res/layout/fragment_t_vseries.xml" value="0.22760416666666666" />
         <entry key="..\:/AndroidStudioProjects/git/MovieRank/app/src/main/res/layout/fragment_variety_show.xml" value="0.22760416666666666" />
-        <entry key="..\:/AndroidStudioProjects/git/MovieRank/app/src/main/res/layout/variety_item.xml" value="0.22760416666666666" />
+        <entry key="..\:/AndroidStudioProjects/git/MovieRank/app/src/main/res/layout/movie_item.xml" value="0.22760416666666666" />
+        <entry key="..\:/AndroidStudioProjects/git/MovieRank/app/src/main/res/layout/variety_item.xml" value="0.4" />
         <entry key="..\:/AndroidStudioProjects/git/MovieRank/app/src/main/res/menu/bottom_nav_menu.xml" value="0.22760416666666666" />
         <entry key="..\:/Drivers/MovieRank/app/src/main/res/layout/activity_main.xml" value="0.20168066580377575" />
         <entry key="..\:/Drivers/MovieRank/app/src/main/res/layout/fragment_home.xml" value="0.23278985507246377" />
         <entry key="..\:/Drivers/MovieRank/app/src/main/res/layout/fragment_movie.xml" value="0.23278985507246377" />
-        <entry key="..\:/Drivers/MovieRank/app/src/main/res/layout/movie_item.xml" value="0.7072879330943848" />
-        <entry key="..\:/Drivers/MovieRank/app/src/main/res/layout/tv_item.xml" value="0.7072879330943848" />
-        <entry key="..\:/Drivers/MovieRank/app/src/main/res/layout/variety_item.xml" value="0.6434782608695652" />
         <entry key="..\:/javaCode/MovieRank/app/src/main/res/layout/fragment_movie.xml" value="0.34057971014492755" />
       </map>
     </option>
