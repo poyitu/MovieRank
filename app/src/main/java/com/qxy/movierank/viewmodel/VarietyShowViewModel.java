@@ -9,6 +9,7 @@ import androidx.lifecycle.ViewModel;
 
 import com.qxy.movierank.bean.ClientTokenBean;
 import com.qxy.movierank.bean.RankBean;
+import com.qxy.movierank.bean.RankVersionBean;
 import com.qxy.movierank.contracts.VarietyShowContract;
 import com.qxy.movierank.interfaces.InfoCallBack;
 import com.qxy.movierank.model.VarietyShowModel;
@@ -21,6 +22,7 @@ public class VarietyShowViewModel extends ViewModel implements VarietyShowContra
 
     private VarietyShowModel model;
     private MutableLiveData<RankBean.DataDTO> mVarietyRankData;
+    private MutableLiveData<RankVersionBean.DataDTO> mVarietyRankVersionData;
     //client_access_token是否已刷新
     private MutableLiveData<Boolean> isClientTokenRefreshComplete;
     private SaveLocal mSaveLocal;
@@ -28,11 +30,16 @@ public class VarietyShowViewModel extends ViewModel implements VarietyShowContra
     public VarietyShowViewModel() {
         model = new VarietyShowModel();
         mVarietyRankData = new MutableLiveData<>();
+        mVarietyRankVersionData = new MutableLiveData<>();
         isClientTokenRefreshComplete = new MutableLiveData<>(false);
     }
 
     public MutableLiveData<RankBean.DataDTO> getmVarietyRankData() {
         return mVarietyRankData;
+    }
+
+    public MutableLiveData<RankVersionBean.DataDTO> getmVarietyRankVersionData() {
+        return mVarietyRankVersionData;
     }
 
     public MutableLiveData<Boolean> getIsClientTokenRefreshComplete() {
@@ -83,5 +90,22 @@ public class VarietyShowViewModel extends ViewModel implements VarietyShowContra
             }
         });
 
+    }
+
+    @Override
+    public void loadVarietyRankVersion(String cursor, String count, String type) {
+        model.getVarietyRankVersionData(cursor, count, type, new InfoCallBack() {
+            @Override
+            public void resultSuccess(Object obj) {
+                if(((RankVersionBean)obj).getData().getError_code() == 0){
+                    mVarietyRankVersionData.postValue(((RankVersionBean)obj).getData());
+                }
+            }
+
+            @Override
+            public void resultFail(Throwable t) {
+
+            }
+        });
     }
 }

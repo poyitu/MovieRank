@@ -10,7 +10,7 @@ import com.qxy.movierank.utils.RetrofitUtil;
 public class VarietyShowModel implements VarietyShowContract.Model {
     @Override
     public void getVarietyRankData(String type,String version,InfoCallBack infoCallBack) {
-        RetrofitUtil.getInstance().getRank(type, version, new RetrofitUtil.CallBack() {
+        RetrofitUtil.getInstance().getRank_Tomcat(type, version, new RetrofitUtil.CallBack() {
             @Override
             public void onSuccess(Object obj) {
                 infoCallBack.resultSuccess(obj);
@@ -22,6 +22,21 @@ public class VarietyShowModel implements VarietyShowContract.Model {
             }
         });
 
+    }
+
+    @Override
+    public void getVarietyRankVersionData(String cursor, String count, String type, InfoCallBack infoCallBack) {
+        RetrofitUtil.getInstance().getRankVersion_Tomcat(cursor, count, type, new RetrofitUtil.CallBack() {
+            @Override
+            public void onSuccess(Object obj) {
+                infoCallBack.resultSuccess(obj);
+            }
+
+            @Override
+            public void onFailed(Throwable t) {
+                infoCallBack.resultFail(t);
+            }
+        });
     }
 
     @Override

@@ -133,6 +133,8 @@ public class VarietyShowFragment extends Fragment implements VarietyShowContract
         super.onStart();
         //加载综艺榜数据
         varietyShowViewModel.loadVarietyRank(getContext(), rankType, rankVersion);
+        //加载综艺榜版本数据
+        varietyShowViewModel.loadVarietyRankVersion("0","10",rankType);
     }
 
     private void initView(View root) {
@@ -143,27 +145,7 @@ public class VarietyShowFragment extends Fragment implements VarietyShowContract
         currentRankVersionVariety.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(isFirstGetRankVersion){
-                    RetrofitUtil.getInstance().getRankVersion("0", "10", rankType, new RetrofitUtil.CallBack() {
-                        @Override
-                        public void onSuccess(Object obj) {
-                            if(((RankVersionBean)obj).getData().getError_code() == 0){
-                                rankVersion_List = ((RankVersionBean)obj).getData().getList();
-                                Log.d("测试", "onSuccess: "+rankVersion_List.size());
-
-                                rankVersionListViewAdapter.setData(rankVersion_List);
-                            }
-                        }
-
-                        @Override
-                        public void onFailed(Throwable t) {
-
-                        }
-                    });
-                }else {
-                    rankVersionListViewAdapter.setData(rankVersion_List);
-                }
-
+                rankVersionListViewAdapter.setData(rankVersion_List);
                 rankVersionDialog.show();
             }
         });
@@ -200,6 +182,13 @@ public class VarietyShowFragment extends Fragment implements VarietyShowContract
             @Override
             public void onChanged(RankBean.DataDTO dataDTO) {
                 showVarietyRank(dataDTO.getActive_time(), dataDTO.getList());
+            }
+        });
+
+        varietyShowViewModel.getmVarietyRankVersionData().observe(getViewLifecycleOwner(), new Observer<RankVersionBean.DataDTO>() {
+            @Override
+            public void onChanged(RankVersionBean.DataDTO dataDTO) {
+                rankVersion_List = dataDTO.getList();
             }
         });
 

@@ -18,6 +18,15 @@ public interface VarietyShowContract {
         void getVarietyRankData(String type,String version,InfoCallBack infoCallBack);
 
         /**
+         * 获取综艺榜版本数据
+         * @param cursor
+         * @param count
+         * @param type
+         * @param infoCallBack
+         */
+        void getVarietyRankVersionData(String cursor,String count,String type,InfoCallBack infoCallBack);
+
+        /**
          * 获取Client_Token   不需要用户授权的
          * @param infoCallBack
          */
@@ -38,6 +47,14 @@ public interface VarietyShowContract {
          * 加载综艺榜数据
          */
         void loadVarietyRank(Context context,String type, String version);
+
+        /**
+         * 加载综艺榜版本数据
+         * @param cursor
+         * @param count
+         * @param type
+         */
+        void loadVarietyRankVersion(String cursor,String count,String type);
 
     }
 }
