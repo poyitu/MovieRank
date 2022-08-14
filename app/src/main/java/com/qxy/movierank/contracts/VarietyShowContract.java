@@ -54,7 +54,7 @@ public interface VarietyShowContract {
          * @param count
          * @param type
          */
-        void loadVarietyRankVersion(String cursor,String count,String type);
+        void loadVarietyRankVersion(String active_time,String cursor,String count,String type);
 
     }
 }

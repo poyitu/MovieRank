@@ -3,7 +3,6 @@ package com.qxy.movierank.viewmodel;
 import android.content.Context;
 import android.util.Log;
 
-import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
@@ -16,13 +15,14 @@ import com.qxy.movierank.model.VarietyShowModel;
 import com.qxy.movierank.utils.RetrofitUtil;
 import com.qxy.movierank.utils.SaveLocal;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class VarietyShowViewModel extends ViewModel implements VarietyShowContract.ViewModel {
 
     private VarietyShowModel model;
     private MutableLiveData<RankBean.DataDTO> mVarietyRankData;
-    private MutableLiveData<RankVersionBean.DataDTO> mVarietyRankVersionData;
+    private MutableLiveData<List<RankVersionBean.DataDTO.ListDTO>> mVarietyRankVersionList;
     //client_access_token是否已刷新
     private MutableLiveData<Boolean> isClientTokenRefreshComplete;
     private SaveLocal mSaveLocal;
@@ -30,7 +30,7 @@ public class VarietyShowViewModel extends ViewModel implements VarietyShowContra
     public VarietyShowViewModel() {
         model = new VarietyShowModel();
         mVarietyRankData = new MutableLiveData<>();
-        mVarietyRankVersionData = new MutableLiveData<>();
+        mVarietyRankVersionList = new MutableLiveData<>();
         isClientTokenRefreshComplete = new MutableLiveData<>(false);
     }
 
@@ -38,8 +38,8 @@ public class VarietyShowViewModel extends ViewModel implements VarietyShowContra
         return mVarietyRankData;
     }
 
-    public MutableLiveData<RankVersionBean.DataDTO> getmVarietyRankVersionData() {
-        return mVarietyRankVersionData;
+    public MutableLiveData<List<RankVersionBean.DataDTO.ListDTO>> getmVarietyRankVersionList() {
+        return mVarietyRankVersionList;
     }
 
     public MutableLiveData<Boolean> getIsClientTokenRefreshComplete() {
@@ -93,12 +93,22 @@ public class VarietyShowViewModel extends ViewModel implements VarietyShowContra
     }
 
     @Override
-    public void loadVarietyRankVersion(String cursor, String count, String type) {
+    public void loadVarietyRankVersion(String active_time,String cursor, String count, String type) {
         model.getVarietyRankVersionData(cursor, count, type, new InfoCallBack() {
             @Override
             public void resultSuccess(Object obj) {
                 if(((RankVersionBean)obj).getData().getError_code() == 0){
-                    mVarietyRankVersionData.postValue(((RankVersionBean)obj).getData());
+
+                    List<RankVersionBean.DataDTO.ListDTO> rankVersion_List = new ArrayList<>();
+                    rankVersion_List = ((RankVersionBean)obj).getData().getList();
+
+                    RankVersionBean.DataDTO.ListDTO  currentWeekRankVersion = new RankVersionBean.DataDTO.ListDTO();
+                    currentWeekRankVersion.setActive_time(active_time);
+                    currentWeekRankVersion.setStart_time(rankVersion_List.get(0).getEnd_time());
+                    currentWeekRankVersion.setEnd_time(active_time);
+
+                    rankVersion_List.add(0,currentWeekRankVersion);
+                    mVarietyRankVersionList.postValue(rankVersion_List);
                 }
             }
 

@@ -59,7 +59,12 @@ public class RankVersionListViewAdapter extends BaseAdapter {
         int version = mRankVersion_List.get(i).getVersion();
         String start_time = mRankVersion_List.get(i).getStart_time();
         String end_time = mRankVersion_List.get(i).getEnd_time();
-        versionInfoRankVersionItem.setText("第"+version+"期 "+start_time+"~"+end_time);
+        if (i == 0){
+            versionInfoRankVersionItem.setText("本周实时榜 "+start_time+"~"+end_time);
+
+        }else {
+            versionInfoRankVersionItem.setText("第"+version+"期 "+start_time+"~"+end_time);
+        }
 
         return view_item;
     }

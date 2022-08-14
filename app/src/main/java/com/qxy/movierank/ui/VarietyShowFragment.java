@@ -7,8 +7,6 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -26,7 +24,6 @@ import com.qxy.movierank.bean.RankBean;
 import com.qxy.movierank.bean.RankVersionBean;
 import com.qxy.movierank.contracts.VarietyShowContract;
 import com.qxy.movierank.utils.NetUtil;
-import com.qxy.movierank.utils.RetrofitUtil;
 import com.qxy.movierank.utils.SaveLocal;
 import com.qxy.movierank.viewmodel.VarietyShowViewModel;
 
@@ -55,9 +52,10 @@ public class VarietyShowFragment extends Fragment implements VarietyShowContract
     private VarietyShowViewModel varietyShowViewModel;
 
     private String rankType = "3";
-    private String rankVersion = "141";
-    private String start_time_rank = "2022-08-01";
-    private String end_time_rank = "2022-08-08";
+    private String rankVersion = "";
+    private String active_time_rank = "";
+    private String start_time_rank = "";
+    private String end_time_rank = "";
 
     private Boolean isFirstGetRankVersion = true;
     private static List<RankVersionBean.DataDTO.ListDTO> rankVersion_List = new ArrayList<>();
@@ -146,7 +144,7 @@ public class VarietyShowFragment extends Fragment implements VarietyShowContract
             public void onClick(View view) {
                 if (isFirstGetRankVersion) {
                     //加载综艺榜版本数据
-                    varietyShowViewModel.loadVarietyRankVersion("0","10",rankType);
+                    varietyShowViewModel.loadVarietyRankVersion(active_time_rank,"0","10",rankType);
                     isFirstGetRankVersion = false;
                 }
 
@@ -185,17 +183,25 @@ public class VarietyShowFragment extends Fragment implements VarietyShowContract
         varietyShowViewModel.getmVarietyRankData().observe(getViewLifecycleOwner(), new Observer<RankBean.DataDTO>() {
             @Override
             public void onChanged(RankBean.DataDTO dataDTO) {
+                active_time_rank = dataDTO.getActive_time();
                 showVarietyRank(dataDTO.getActive_time(), dataDTO.getList());
             }
         });
 
-        varietyShowViewModel.getmVarietyRankVersionData().observe(getViewLifecycleOwner(), new Observer<RankVersionBean.DataDTO>() {
+        varietyShowViewModel.getmVarietyRankVersionList().observe(getViewLifecycleOwner(), new Observer<List<RankVersionBean.DataDTO.ListDTO>>() {
             @Override
-            public void onChanged(RankVersionBean.DataDTO dataDTO) {
-                rankVersion_List = dataDTO.getList();
+            public void onChanged(List<RankVersionBean.DataDTO.ListDTO> listDTOS) {
+                rankVersion_List = listDTOS;
+//                RankVersionBean.DataDTO.ListDTO currentWeekRank = new RankVersionBean.DataDTO.ListDTO();
+//                currentWeekRank.setActive_time(active_time_rank);
+//                currentWeekRank.setStart_time(rankVersion_List.get(0).getEnd_time());
+//                currentWeekRank.setEnd_time(active_time_rank);
+//
+//                rankVersion_List.add(0,currentWeekRank);
+                Log.d("测试", "onChanged1111111111111111111: "+rankVersion_List.size());
                 rankVersionListViewAdapter.setData(rankVersion_List);
-
             }
+
         });
 
         //在提示access_token过期后，已重新获取access_token，现重新请求数据
@@ -238,7 +244,7 @@ public class VarietyShowFragment extends Fragment implements VarietyShowContract
     @Override
     public void showVarietyRank(String active_time, List<RankBean.DataDTO.ListDTO> varietyShowBeanList) {
         //本周榜
-        if (rankVersion.isEmpty()) {
+        if (rankVersion.equals("0")|| rankVersion.isEmpty()) {
             currentRankVersionVariety.setText("本周榜 | 更新于" + active_time + " 12:00");
         } else {
             //非本周榜
