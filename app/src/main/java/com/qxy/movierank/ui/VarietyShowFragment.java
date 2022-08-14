@@ -167,7 +167,7 @@ public class VarietyShowFragment extends Fragment implements VarietyShowContract
         linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         varietyShowRankRecyclerViewVariert.setLayoutManager(linearLayoutManager);
         // 查看当前网络状态
-        netWorkStart = NetUtil.getNetWorkStart(getActivity());
+        //netWorkStart = NetUtil.getNetWorkStart(getActivity());
         //设置适配器
         varietyAdapter = new VarietyAdapter();
         varietyShowRankRecyclerViewVariert.setAdapter(varietyAdapter);
