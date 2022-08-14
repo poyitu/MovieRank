@@ -156,6 +156,28 @@ public class RetrofitUtil {
     }
 
 
+    public void getRankVersion_Tomcat(String cursor, String count, String type, CallBack callBack){
+        Retrofit retrofit = new Retrofit.Builder()
+//               .baseUrl("http://192.168.0.105:3000/")
+                .baseUrl("http://192.168.3.30:8080/project/")
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+        AppService appService = retrofit.create(AppService.class);
+        appService.getRankVersionData_Tomcat().enqueue(new Callback<RankVersionBean>() {
+            @Override
+            public void onResponse(Call<RankVersionBean> call, Response<RankVersionBean> response) {
+                callBack.onSuccess(response.body());
+            }
+
+            @Override
+            public void onFailure(Call<RankVersionBean> call, Throwable t) {
+                callBack.onFailed(t);
+            }
+        });
+
+    }
+
+
 
     public interface CallBack {
         void onSuccess(Object obj);

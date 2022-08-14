@@ -43,7 +43,7 @@ public interface AppService {
     Call<RankBean> getRankData_Tomcat();
 
     @GET("RankVersion3.json")
-    Call<RankBean> getRankVersionData_Tomcat();
+    Call<RankVersionBean> getRankVersionData_Tomcat();
 
     /**
      *获取抖音影视综榜单版本

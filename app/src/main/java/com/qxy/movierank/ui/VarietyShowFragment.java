@@ -3,11 +3,14 @@ package com.qxy.movierank.ui;
 import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
@@ -17,10 +20,13 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.qxy.movierank.R;
+import com.qxy.movierank.adapter.RankVersionListViewAdapter;
 import com.qxy.movierank.adapter.VarietyAdapter;
 import com.qxy.movierank.bean.RankBean;
+import com.qxy.movierank.bean.RankVersionBean;
 import com.qxy.movierank.contracts.VarietyShowContract;
 import com.qxy.movierank.utils.NetUtil;
+import com.qxy.movierank.utils.RetrofitUtil;
 import com.qxy.movierank.utils.SaveLocal;
 import com.qxy.movierank.viewmodel.VarietyShowViewModel;
 
@@ -57,6 +63,7 @@ public class VarietyShowFragment extends Fragment implements VarietyShowContract
     private SaveLocal mSaveLocal;
 
     private AlertDialog rankVersionDialog;
+    private RankVersionListViewAdapter rankVersionListViewAdapter;
 
     public VarietyShowFragment() {
         // Required empty public constructor
@@ -119,7 +126,7 @@ public class VarietyShowFragment extends Fragment implements VarietyShowContract
     public void onStart() {
         super.onStart();
         //加载综艺榜数据
-        varietyShowViewModel.loadVarietyRank(getContext(),rankType, rankVersion);
+        varietyShowViewModel.loadVarietyRank(getContext(), rankType, rankVersion);
     }
 
     private void initView(View root) {
@@ -130,6 +137,20 @@ public class VarietyShowFragment extends Fragment implements VarietyShowContract
         currentRankVersionVariety.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                RetrofitUtil.getInstance().getRankVersion_Tomcat("0", "10", rankType, new RetrofitUtil.CallBack() {
+                    @Override
+                    public void onSuccess(Object obj) {
+                        if(((RankVersionBean)obj).getData().getError_code() == 0){
+                            Log.d("测试", "onSuccess: "+((RankVersionBean)obj).getData().getList().get(0).getVersion());
+                            rankVersionListViewAdapter.setData(((RankVersionBean)obj).getData().getList());
+                        }
+                    }
+
+                    @Override
+                    public void onFailed(Throwable t) {
+
+                    }
+                });
                 rankVersionDialog.show();
             }
         });
@@ -166,7 +187,6 @@ public class VarietyShowFragment extends Fragment implements VarietyShowContract
             @Override
             public void onChanged(RankBean.DataDTO dataDTO) {
                 showVarietyRank(dataDTO.getActive_time(), dataDTO.getList());
-
             }
         });
 
@@ -174,40 +194,41 @@ public class VarietyShowFragment extends Fragment implements VarietyShowContract
         varietyShowViewModel.getIsClientTokenRefreshComplete().observe(getViewLifecycleOwner(), new Observer<Boolean>() {
             @Override
             public void onChanged(Boolean aBoolean) {
-                varietyShowViewModel.loadVarietyRank(getContext(),rankType, rankVersion);
+                varietyShowViewModel.loadVarietyRank(getContext(), rankType, rankVersion);
             }
         });
 
     }
 
 
-    private void initShowRankVersionDialog(){
-        View view = View.inflate(getContext(),R.layout.dialog_rank_version,null);
+    private void initShowRankVersionDialog() {
+        View view = View.inflate(getContext(), R.layout.dialog_rank_version, null);
 
-        androidx.appcompat.app.AlertDialog.Builder builder = new androidx.appcompat.app.AlertDialog.Builder(getContext());
+        rankVersionListViewAdapter = new RankVersionListViewAdapter(getContext());
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
         rankVersionDialog = builder
-                .setTitle("榜单版本")
                 .setView(view)
-                .setNegativeButton("完成", new DialogInterface.OnClickListener() {
+                .setAdapter(rankVersionListViewAdapter, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
+                        Toast.makeText(getContext(),"点击了"+i,Toast.LENGTH_SHORT).show();
 
                     }
                 })
                 .create();
 
 
-
     }
 
     @Override
-    public void showVarietyRank(String active_time,List<RankBean.DataDTO.ListDTO> varietyShowBeanList) {
+    public void showVarietyRank(String active_time, List<RankBean.DataDTO.ListDTO> varietyShowBeanList) {
         //本周榜
-        if(rankVersion.isEmpty()){
-            currentRankVersionVariety.setText("本周榜 | 更新于"+active_time+" 12:00");
-        }else {
+        if (rankVersion.isEmpty()) {
+            currentRankVersionVariety.setText("本周榜 | 更新于" + active_time + " 12:00");
+        } else {
             //非本周榜
-            currentRankVersionVariety.setText("第"+rankVersion+"期 "+start_time_rank+"~"+end_time_rank);
+            currentRankVersionVariety.setText("第" + rankVersion + "期 " + start_time_rank + "~" + end_time_rank);
         }
 
         varietyAdapter.setData(varietyShowBeanList);
