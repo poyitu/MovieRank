@@ -144,8 +144,12 @@ public class VarietyShowFragment extends Fragment implements VarietyShowContract
         currentRankVersionVariety.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //加载综艺榜版本数据
-                varietyShowViewModel.loadVarietyRankVersion("0","10",rankType);
+                if (isFirstGetRankVersion) {
+                    //加载综艺榜版本数据
+                    varietyShowViewModel.loadVarietyRankVersion("0","10",rankType);
+                    isFirstGetRankVersion = false;
+                }
+
                 rankVersionDialog.show();
             }
         });
