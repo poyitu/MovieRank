@@ -58,7 +58,10 @@ public class VarietyShowFragment extends Fragment implements VarietyShowContract
     private String rankVersion = "141";
     private String start_time_rank = "2022-08-01";
     private String end_time_rank = "2022-08-08";
-    private List<RankVersionBean.DataDTO.ListDTO> rankVersion_List = new ArrayList<>();
+
+    private Boolean isFirstGetRankVersion = true;
+    private static List<RankVersionBean.DataDTO.ListDTO> rankVersion_List = new ArrayList<>();
+
     private TextView currentRankVersionVariety;
     private TextView historyRankVersionVariety;
     private int netWorkStart;
@@ -140,22 +143,27 @@ public class VarietyShowFragment extends Fragment implements VarietyShowContract
         currentRankVersionVariety.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                RetrofitUtil.getInstance().getRankVersion_Tomcat("0", "10", rankType, new RetrofitUtil.CallBack() {
-                    @Override
-                    public void onSuccess(Object obj) {
-                        if(((RankVersionBean)obj).getData().getError_code() == 0){
-                            rankVersion_List = ((RankVersionBean)obj).getData().getList();
-                            Log.d("测试", "onSuccess: "+rankVersion_List.size());
+                if(isFirstGetRankVersion){
+                    RetrofitUtil.getInstance().getRankVersion("0", "10", rankType, new RetrofitUtil.CallBack() {
+                        @Override
+                        public void onSuccess(Object obj) {
+                            if(((RankVersionBean)obj).getData().getError_code() == 0){
+                                rankVersion_List = ((RankVersionBean)obj).getData().getList();
+                                Log.d("测试", "onSuccess: "+rankVersion_List.size());
 
-                            rankVersionListViewAdapter.setData(rankVersion_List);
+                                rankVersionListViewAdapter.setData(rankVersion_List);
+                            }
                         }
-                    }
 
-                    @Override
-                    public void onFailed(Throwable t) {
+                        @Override
+                        public void onFailed(Throwable t) {
 
-                    }
-                });
+                        }
+                    });
+                }else {
+                    rankVersionListViewAdapter.setData(rankVersion_List);
+                }
+
                 rankVersionDialog.show();
             }
         });
