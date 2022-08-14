@@ -30,6 +30,7 @@ import com.qxy.movierank.utils.RetrofitUtil;
 import com.qxy.movierank.utils.SaveLocal;
 import com.qxy.movierank.viewmodel.VarietyShowViewModel;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -57,6 +58,7 @@ public class VarietyShowFragment extends Fragment implements VarietyShowContract
     private String rankVersion = "141";
     private String start_time_rank = "2022-08-01";
     private String end_time_rank = "2022-08-08";
+    private List<RankVersionBean.DataDTO.ListDTO> rankVersion_List = new ArrayList<>();
     private TextView currentRankVersionVariety;
     private TextView historyRankVersionVariety;
     private int netWorkStart;
@@ -105,6 +107,7 @@ public class VarietyShowFragment extends Fragment implements VarietyShowContract
         varietyShowViewModel = new ViewModelProvider(getActivity()).get(VarietyShowViewModel.class);
         //获取存储到本地数据的工具类
         mSaveLocal = new SaveLocal(getActivity());
+
         initView(root);
         initRecyclerView();
         initObserveData();
@@ -141,8 +144,10 @@ public class VarietyShowFragment extends Fragment implements VarietyShowContract
                     @Override
                     public void onSuccess(Object obj) {
                         if(((RankVersionBean)obj).getData().getError_code() == 0){
-                            Log.d("测试", "onSuccess: "+((RankVersionBean)obj).getData().getList().get(0).getVersion());
-                            rankVersionListViewAdapter.setData(((RankVersionBean)obj).getData().getList());
+                            rankVersion_List = ((RankVersionBean)obj).getData().getList();
+                            Log.d("测试", "onSuccess: "+rankVersion_List.size());
+
+                            rankVersionListViewAdapter.setData(rankVersion_List);
                         }
                     }
 
@@ -212,7 +217,13 @@ public class VarietyShowFragment extends Fragment implements VarietyShowContract
                 .setAdapter(rankVersionListViewAdapter, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
-                        Toast.makeText(getContext(),"点击了"+i,Toast.LENGTH_SHORT).show();
+                        rankVersion = rankVersion_List.get(i).getVersion()+"";
+                        start_time_rank = rankVersion_List.get(i).getStart_time();
+                        end_time_rank = rankVersion_List.get(i).getEnd_time();
+
+                        varietyShowViewModel.loadVarietyRank(getContext(),rankType,rankVersion);
+
+                        Toast.makeText(getContext(),"点击了"+rankVersion_List.get(i).getVersion(),Toast.LENGTH_SHORT).show();
 
                     }
                 })

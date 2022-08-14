@@ -60,7 +60,6 @@ public class RankVersionListViewAdapter extends BaseAdapter {
         String start_time = mRankVersion_List.get(i).getStart_time();
         String end_time = mRankVersion_List.get(i).getEnd_time();
         versionInfoRankVersionItem.setText("第"+version+"期 "+start_time+"~"+end_time);
-        Log.d("测试", "getView: "+version);
 
         return view_item;
     }
