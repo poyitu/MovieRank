@@ -95,7 +95,7 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MyViewholder
         }
         holder.tvDirector.setText(dirctors);
         holder.tvTime.setText(movie.getRelease_date() == null ? "" : movie.getRelease_date() + " 上映");
-        double v = new BigDecimal( movie.getHot()).divide(new BigDecimal(10000)).setScale(1, BigDecimal.ROUND_HALF_UP).doubleValue();
+        double v = new BigDecimal(movie.getHot()).divide(new BigDecimal(10000)).setScale(1, BigDecimal.ROUND_HALF_UP).doubleValue();
         holder.tvPopularity.setText(v + "万");
         holder.tvRegion.setText(movie.getAreas() == null ? "" : movie.getAreas().get(0) + "");
 
@@ -108,7 +108,10 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MyViewholder
 
     @Override
     public int getItemCount() {
-        return beanArrayList.size();
+        if (beanArrayList != null) {
+            return beanArrayList.size();
+        }
+        return 0;
     }
 
     //Viewholder

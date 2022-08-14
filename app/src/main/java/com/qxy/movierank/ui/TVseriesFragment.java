@@ -1,5 +1,6 @@
 package com.qxy.movierank.ui;
 
+import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -15,7 +16,9 @@ import com.qxy.movierank.R;
 import com.qxy.movierank.adapter.MovieAdapter;
 import com.qxy.movierank.adapter.TvAdapter;
 import com.qxy.movierank.bean.RankBean;
+import com.qxy.movierank.utils.NetUtil;
 import com.qxy.movierank.utils.RetrofitUtil;
+import com.qxy.movierank.utils.SaveLocal;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -33,10 +36,13 @@ public class TVseriesFragment extends Fragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
+    private final String ITEMNAME = "tv";
     private View root;
     private RecyclerView mRecyclerView;
     private TvAdapter mAdapter;
     private ArrayList<RankBean.DataDTO.ListDTO> beanArrayList = new ArrayList<>();
+    private int netWorkStart;
+    private SaveLocal mSaveLocal;
 
     public TVseriesFragment() {
         // Required empty public constructor
@@ -77,12 +83,27 @@ public class TVseriesFragment extends Fragment {
             //获得布局文件
             root = inflater.inflate((R.layout.fragment_movie), container, false);
         }
+        //获取存储到本地数据的工具类
+        mSaveLocal = new SaveLocal(getActivity());
+
         //初始化RecylerView组件的方法
         initRecyclerview();
-        //初始化数据
-        initData();
+        SharedPreferences rankItem = getActivity().getSharedPreferences(ITEMNAME, 0);
+        if (rankItem != null && netWorkStart == 1) {
+            // 断网时初始化本地数据
+            initLoclDate();
+        } else {
+            //初始化数据
+            initData();
+        }
         return root;
     }
+
+    private void initLoclDate() {
+        List<RankBean.DataDTO.ListDTO> bean = mSaveLocal.getBean(ITEMNAME);
+        mAdapter.setData(bean);
+    }
+
 
     private void initData() {
         RetrofitUtil retrofitUtil = RetrofitUtil.getInstance();
@@ -98,6 +119,7 @@ public class TVseriesFragment extends Fragment {
 
                 if (((RankBean) o).getData().getError_code() == 0) {
                     mAdapter.setData(rank_list);
+                    mSaveLocal.saveBean(rank_list, ITEMNAME);
                 } else {
                     Log.d("测试", "onSuccess: " + ((RankBean) o).getData().getDescription());
                 }
@@ -116,7 +138,7 @@ public class TVseriesFragment extends Fragment {
     private void initRecyclerview() {
         mRecyclerView = (RecyclerView) root.findViewById(R.id.tv1);
         //创建adapter类的对象
-
+        netWorkStart = NetUtil.getNetWorkStart(getActivity());
         //将对象作为参数通过setAdapter方法设置给recylerview；
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         mAdapter = new TvAdapter(getActivity());

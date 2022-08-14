@@ -67,7 +67,7 @@ public class TvAdapter extends RecyclerView.Adapter<TvAdapter.MyViewholder> {
 
         holder.tvDirector.setText(movie.getDirectors() == null ? "" : movie.getDirectors().toString() + "");
         holder.tvTime.setText(movie.getRelease_date());
-        double v = new BigDecimal( movie.getHot()).divide(new BigDecimal(10000)).setScale(1, BigDecimal.ROUND_HALF_UP).doubleValue();
+        double v = new BigDecimal(movie.getHot()).divide(new BigDecimal(10000)).setScale(1, BigDecimal.ROUND_HALF_UP).doubleValue();
         holder.tvPopularity.setText(v + "万");
         List<String> areas = movie.getAreas();
         if (null != areas) {
@@ -80,7 +80,10 @@ public class TvAdapter extends RecyclerView.Adapter<TvAdapter.MyViewholder> {
 
     @Override
     public int getItemCount() {
-        return beanArrayList.size();
+        if (beanArrayList != null) {
+            return beanArrayList.size();
+        }
+        return 0;
     }
 
     //Viewholder

@@ -39,7 +39,7 @@ public interface AppService {
     @GET("discovery/ent/rank/item/")
     Call<RankBean> getRankData(@Header("access-token")String client_access_token, @Query("type") String type, @Query("version") String version);
 
-    @GET("Rank3.json")
+    @GET("movieRank.json")
     Call<RankBean> getRankData_Tomcat();
 
     /**

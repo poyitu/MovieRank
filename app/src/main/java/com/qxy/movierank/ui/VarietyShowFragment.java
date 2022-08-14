@@ -1,5 +1,6 @@
 package com.qxy.movierank.ui;
 
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,6 +17,8 @@ import com.qxy.movierank.R;
 import com.qxy.movierank.adapter.VarietyAdapter;
 import com.qxy.movierank.bean.RankBean;
 import com.qxy.movierank.contracts.VarietyShowContract;
+import com.qxy.movierank.utils.NetUtil;
+import com.qxy.movierank.utils.SaveLocal;
 import com.qxy.movierank.viewmodel.VarietyShowViewModel;
 
 import java.util.List;
@@ -31,6 +34,7 @@ public class VarietyShowFragment extends Fragment implements VarietyShowContract
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
+    private static final String ITEMNAME = "Variety";
 
     // TODO: Rename and change types of parameters
     private String mParam1;
@@ -44,6 +48,8 @@ public class VarietyShowFragment extends Fragment implements VarietyShowContract
     private String rankVersion = "";
     private TextView currentRankVersionVariety;
     private TextView historyRankVersionVariety;
+    private int netWorkStart;
+    private SaveLocal mSaveLocal;
 
     public VarietyShowFragment() {
         // Required empty public constructor
@@ -83,7 +89,8 @@ public class VarietyShowFragment extends Fragment implements VarietyShowContract
 
         View root = inflater.inflate(R.layout.fragment_variety_show, container, false);
         varietyShowViewModel = new ViewModelProvider(getActivity()).get(VarietyShowViewModel.class);
-
+        //获取存储到本地数据的工具类
+        mSaveLocal = new SaveLocal(getActivity());
         initView(root);
         initRecyclerView();
         initObserveData();
@@ -96,12 +103,19 @@ public class VarietyShowFragment extends Fragment implements VarietyShowContract
         historyRankVersionVariety = (TextView) root.findViewById(R.id.historyRankVersion_variety);
     }
 
+    // 加载本地数据
+    private void initLoclDate() {
+        List<RankBean.DataDTO.ListDTO> bean = mSaveLocal.getBean(ITEMNAME);
+        varietyAdapter.setData(bean);
+    }
 
     private void initRecyclerView() {
         //设置布局管理器
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
         linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         varietyShowRankRecyclerViewVariert.setLayoutManager(linearLayoutManager);
+        // 查看当前网络状态
+        netWorkStart = NetUtil.getNetWorkStart(getActivity());
         //设置适配器
         varietyAdapter = new VarietyAdapter();
         varietyShowRankRecyclerViewVariert.setAdapter(varietyAdapter);
@@ -142,11 +156,12 @@ public class VarietyShowFragment extends Fragment implements VarietyShowContract
     }
 
     @Override
-    public void showVarietyRank(String active_time,List<RankBean.DataDTO.ListDTO> varietyShowBeanList) {
-        currentRankVersionVariety.setText("更新于"+active_time);
+    public void showVarietyRank(String active_time, List<RankBean.DataDTO.ListDTO> varietyShowBeanList) {
+        currentRankVersionVariety.setText("更新于" + active_time);
 
         varietyAdapter.setData(varietyShowBeanList);
-
+        // 接受获取到的数据，并存储到本地
+        mSaveLocal.saveBean(varietyShowBeanList, ITEMNAME);
     }
 
 

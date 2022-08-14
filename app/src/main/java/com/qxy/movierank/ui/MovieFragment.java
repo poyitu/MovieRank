@@ -1,5 +1,6 @@
 package com.qxy.movierank.ui;
 
+import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -19,7 +20,9 @@ import com.qxy.movierank.adapter.MovieAdapter;
 import com.qxy.movierank.bean.MovieBean;
 import com.qxy.movierank.bean.RankBean;
 import com.qxy.movierank.utils.JsonParse;
+import com.qxy.movierank.utils.NetUtil;
 import com.qxy.movierank.utils.RetrofitUtil;
+import com.qxy.movierank.utils.SaveLocal;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -38,32 +41,24 @@ public class MovieFragment extends Fragment {
     private static final String ARG_PARAM2 = "param2";
     private static final String TAG = "MovieFragment";
     private View root;
-
+    private int netWorkStart;
+    private final String ITEMNAME = "movie";
     private String mParam1;
     private String mParam2;
     private RecyclerView mRecyclerView;
     private MovieAdapter mAdapter;
     private ArrayList<RankBean.DataDTO.ListDTO> beanArrayList = new ArrayList<>();
+    private SaveLocal mSaveLocal;
 
     public MovieFragment() {
         // Required empty public constructor
     }
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment MovieFragment.
-     */
+
     // TODO: Rename and change types and number of parameters
-    public static MovieFragment newInstance(String param1, String param2) {
+    public static MovieFragment newInstance() {
         MovieFragment fragment = new MovieFragment();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
+
         return fragment;
     }
 
@@ -74,6 +69,8 @@ public class MovieFragment extends Fragment {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
+
+
     }
 
     @Override
@@ -84,15 +81,32 @@ public class MovieFragment extends Fragment {
             //获得布局文件
             root = inflater.inflate((R.layout.fragment_movie), container, false);
         }
+        //获取存储到本地数据的工具类
+        mSaveLocal = new SaveLocal(getActivity());
         //初始化RecylerView组件的方法
         initRecyclerview();
-        //初始化数据
-        initData();
+        SharedPreferences rankItem = getActivity().getSharedPreferences(ITEMNAME, 0);
+        if (rankItem != null && netWorkStart == 1) {
+            // 断网时初始化本地数据
+            initLoclDate();
+        } else {
+            //初始化数据
+            initData();
+        }
+
+
         return root;
     }
 
+    private void initLoclDate() {
+        List<RankBean.DataDTO.ListDTO> bean = mSaveLocal.getBean(ITEMNAME);
+        mAdapter.setData(bean);
+    }
+
+
     private void initData() {
         RetrofitUtil retrofitUtil = RetrofitUtil.getInstance();
+
         retrofitUtil.getRank_Tomcat("1", null, new RetrofitUtil.CallBack() {
             @Override
             public void onSuccess(Object o) {
@@ -101,8 +115,9 @@ public class MovieFragment extends Fragment {
                 List<RankBean.DataDTO.ListDTO> rank_list = new ArrayList<>();
 
                 if (((RankBean) o).getData().getError_code() == 0) {
-                    rank_list = ((RankBean)o).getData().getList();
+                    rank_list = ((RankBean) o).getData().getList();
                     mAdapter.setData(rank_list);
+                    mSaveLocal.saveBean(rank_list, ITEMNAME);
                 } else {
                     Log.d("测试", "onSuccess: " + ((RankBean) o).getData().getDescription());
                 }
@@ -115,12 +130,13 @@ public class MovieFragment extends Fragment {
 
             }
         });
+
     }
 
     private void initRecyclerview() {
         mRecyclerView = (RecyclerView) root.findViewById(R.id.tv1);
         //创建adapter类的对象
-
+        netWorkStart = NetUtil.getNetWorkStart(getActivity());
         //将对象作为参数通过setAdapter方法设置给recylerview；
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         mAdapter = new MovieAdapter(getActivity());
