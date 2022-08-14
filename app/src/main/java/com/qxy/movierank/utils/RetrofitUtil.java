@@ -20,8 +20,8 @@ public class RetrofitUtil {
 
     private static RetrofitUtil retrofitUtil = null;
     private String baseUrl = "https://open.douyin.com/";
-    private String client_key = "aw1o1jsnnkemujkv";
-    private String client_secret = "d7f2c83a35dae47bd834bb8a2b5248ca";
+    private String client_key = "awxusje7mx1c1u64";
+    private String client_secret = "a3662979f6a34b35cc45dce514dc04a7";
     private String grant_type = "client_credential";
 
     public static String client_access_token = "clt.f2b461c1230c3457ce9f6155eba51958mwpHsQoiEtHcAVyX1hwzCLrZvhYt";

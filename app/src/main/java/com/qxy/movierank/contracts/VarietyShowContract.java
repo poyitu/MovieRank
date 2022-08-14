@@ -14,6 +14,12 @@ public interface VarietyShowContract {
          * @param infoCallBack
          */
         void getVarietyRankData(InfoCallBack infoCallBack);
+
+        /**
+         * 获取Client_Token   不需要用户授权的
+         * @param infoCallBack
+         */
+        void getClient_Token(InfoCallBack infoCallBack);
     }
 
 
@@ -30,5 +36,6 @@ public interface VarietyShowContract {
          * 加载综艺榜数据
          */
         void loadVarietyRank();
+
     }
 }

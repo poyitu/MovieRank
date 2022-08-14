@@ -111,6 +111,14 @@ public class VarietyShowFragment extends Fragment implements VarietyShowContract
             }
         });
 
+        //在提示access_token过期后，已重新获取access_token，现重新请求数据
+        varietyShowViewModel.getIsClientTokenRefreshComplete().observe(getViewLifecycleOwner(), new Observer<Boolean>() {
+            @Override
+            public void onChanged(Boolean aBoolean) {
+                varietyShowViewModel.loadVarietyRank();
+            }
+        });
+
     }
 
     @Override
