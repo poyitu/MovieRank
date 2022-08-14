@@ -70,13 +70,13 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:text="热度"
-            app:layout_constraintTop_toTopOf="@id/imageView3"
-            app:layout_constraintBottom_toBottomOf="@+id/imageView3"
+            app:layout_constraintTop_toTopOf="@id/hot_imageView_variety_item"
+            app:layout_constraintBottom_toBottomOf="@+id/hot_imageView_variety_item"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/imageView3" />
+            app:layout_constraintStart_toEndOf="@+id/hot_imageView_variety_item" />
 
         <ImageView
-            android:id="@+id/imageView3"
+            android:id="@+id/hot_imageView_variety_item"
             android:layout_width="18dp"
             android:layout_height="24dp"
             android:layout_marginTop="6dp"

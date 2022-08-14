@@ -1,23 +1,17 @@
 package com.qxy.movierank.adapter;
 
 import android.content.Context;
-import android.content.Intent;
-import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.CompoundButton;
 import android.widget.ImageView;
-import android.widget.Switch;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
-import com.qxy.movierank.MainActivity;
 import com.qxy.movierank.R;
-import com.qxy.movierank.bean.MovieBean;
 import com.qxy.movierank.bean.RankBean;
 
 import java.math.BigDecimal;
@@ -122,12 +116,12 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MyViewholder
         public MyViewholder(@NonNull View itemView) {
             super(itemView);
             tvMovieName = itemView.findViewById(R.id.movie_name);
-            tvDirector = itemView.findViewById(R.id.director);
-            tvActor = itemView.findViewById(R.id.actor);
-            tvTime = itemView.findViewById(R.id.time);
-            tvPopularity = itemView.findViewById(R.id.popularity);
-            tvRegion = itemView.findViewById(R.id.region);
-            posterImageView = itemView.findViewById(R.id.poster);
+            tvDirector = itemView.findViewById(R.id.director_tv_item);
+            tvActor = itemView.findViewById(R.id.actor_tv_item);
+            tvTime = itemView.findViewById(R.id.time_tv_item);
+            tvPopularity = itemView.findViewById(R.id.popularity_tv_item);
+            tvRegion = itemView.findViewById(R.id.region_tv_item);
+            posterImageView = itemView.findViewById(R.id.poster_tv_item);
         }
     }
 

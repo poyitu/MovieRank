@@ -20,6 +20,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.qxy.movierank.R;
 import com.qxy.movierank.adapter.RankVersionListViewAdapter;
+import com.qxy.movierank.adapter.TvAdapter;
 import com.qxy.movierank.adapter.VarietyAdapter;
 import com.qxy.movierank.bean.RankBean;
 import com.qxy.movierank.bean.RankVersionBean;
@@ -48,7 +49,7 @@ public class TVseriesFragment extends Fragment implements VarietyShowContract.Vi
     private final String ITEMNAME = "tv";
     private View root;
     private RecyclerView mRecyclerView;
-    private VarietyAdapter mAdapter;
+    private TvAdapter mAdapter;
     private ArrayList<RankBean.DataDTO.ListDTO> beanArrayList = new ArrayList<>();
     private int netWorkStart;
     private SaveLocal mSaveLocal;
@@ -216,7 +217,7 @@ public class TVseriesFragment extends Fragment implements VarietyShowContract.Vi
         //将对象作为参数通过setAdapter方法设置给recylerview；
         rankRecyclerViewTvSeries.setLayoutManager(new LinearLayoutManager(getActivity()));
 //        mAdapter = new TvAdapter(getActivity());
-        mAdapter = new VarietyAdapter();
+        mAdapter = new TvAdapter();
         rankRecyclerViewTvSeries.setAdapter(mAdapter);
         //这步骤必须有，这是选择RecylerView的显示方式
     }
