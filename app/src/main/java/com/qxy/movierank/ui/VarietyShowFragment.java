@@ -1,10 +1,10 @@
 package com.qxy.movierank.ui;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
@@ -16,10 +16,8 @@ import com.qxy.movierank.R;
 import com.qxy.movierank.adapter.VarietyAdapter;
 import com.qxy.movierank.bean.RankBean;
 import com.qxy.movierank.contracts.VarietyShowContract;
-import com.qxy.movierank.utils.RetrofitUtil;
 import com.qxy.movierank.viewmodel.VarietyShowViewModel;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -41,6 +39,11 @@ public class VarietyShowFragment extends Fragment implements VarietyShowContract
     private VarietyAdapter varietyAdapter;
 
     private VarietyShowViewModel varietyShowViewModel;
+
+    private String rankType = "3";
+    private String rankVersion = "";
+    private TextView currentRankVersionVariety;
+    private TextView historyRankVersionVariety;
 
     public VarietyShowFragment() {
         // Required empty public constructor
@@ -89,10 +92,12 @@ public class VarietyShowFragment extends Fragment implements VarietyShowContract
 
     private void initView(View root) {
         varietyShowRankRecyclerViewVariert = (RecyclerView) root.findViewById(R.id.varietyShowRank_RecyclerView_variert);
+        currentRankVersionVariety = (TextView) root.findViewById(R.id.currentRankVersion_variety);
+        historyRankVersionVariety = (TextView) root.findViewById(R.id.historyRankVersion_variety);
     }
 
 
-    private void initRecyclerView(){
+    private void initRecyclerView() {
         //设置布局管理器
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
         linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
@@ -103,11 +108,19 @@ public class VarietyShowFragment extends Fragment implements VarietyShowContract
 
     }
 
-    private void initObserveData(){
-        varietyShowViewModel.getmVarietyBeanList().observe(getViewLifecycleOwner(), new Observer<List<RankBean.DataDTO.ListDTO>>() {
+    private void initObserveData() {
+//        varietyShowViewModel.getmVarietyBeanList().observe(getViewLifecycleOwner(), new Observer<List<RankBean.DataDTO.ListDTO>>() {
+//            @Override
+//            public void onChanged(List<RankBean.DataDTO.ListDTO> listDTOS) {
+//                showVarietyRank(listDTOS);
+//            }
+//        });
+
+        varietyShowViewModel.getmVarietyRankData().observe(getViewLifecycleOwner(), new Observer<RankBean.DataDTO>() {
             @Override
-            public void onChanged(List<RankBean.DataDTO.ListDTO> listDTOS) {
-                showVarietyRank(listDTOS);
+            public void onChanged(RankBean.DataDTO dataDTO) {
+                showVarietyRank(dataDTO.getActive_time(),dataDTO.getList());
+
             }
         });
 
@@ -115,7 +128,7 @@ public class VarietyShowFragment extends Fragment implements VarietyShowContract
         varietyShowViewModel.getIsClientTokenRefreshComplete().observe(getViewLifecycleOwner(), new Observer<Boolean>() {
             @Override
             public void onChanged(Boolean aBoolean) {
-                varietyShowViewModel.loadVarietyRank();
+                varietyShowViewModel.loadVarietyRank(rankType, rankVersion);
             }
         });
 
@@ -125,12 +138,16 @@ public class VarietyShowFragment extends Fragment implements VarietyShowContract
     public void onStart() {
         super.onStart();
         //加载综艺榜数据
-        varietyShowViewModel.loadVarietyRank();
+        varietyShowViewModel.loadVarietyRank(rankType, rankVersion);
     }
 
     @Override
-    public void showVarietyRank(List<RankBean.DataDTO.ListDTO> varietyShowBeanList) {
+    public void showVarietyRank(String active_time,List<RankBean.DataDTO.ListDTO> varietyShowBeanList) {
+        currentRankVersionVariety.setText("更新于"+active_time);
+
         varietyAdapter.setData(varietyShowBeanList);
 
     }
+
+
 }

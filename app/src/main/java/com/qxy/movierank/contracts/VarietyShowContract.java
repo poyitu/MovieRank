@@ -13,7 +13,7 @@ public interface VarietyShowContract {
          *获取综艺榜数据
          * @param infoCallBack
          */
-        void getVarietyRankData(InfoCallBack infoCallBack);
+        void getVarietyRankData(String type,String version,InfoCallBack infoCallBack);
 
         /**
          * 获取Client_Token   不需要用户授权的
@@ -28,14 +28,14 @@ public interface VarietyShowContract {
          * 展示综艺榜数据
          * @param varietyShowBeanList
          */
-        void showVarietyRank(List<RankBean.DataDTO.ListDTO> varietyShowBeanList);
+        void showVarietyRank(String active_time,List<RankBean.DataDTO.ListDTO> varietyShowBeanList);
     }
 
     interface ViewModel{
         /**
          * 加载综艺榜数据
          */
-        void loadVarietyRank();
+        void loadVarietyRank(String type,String version);
 
     }
 }

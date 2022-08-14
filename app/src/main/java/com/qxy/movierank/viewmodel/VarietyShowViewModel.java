@@ -13,24 +13,23 @@ import com.qxy.movierank.interfaces.InfoCallBack;
 import com.qxy.movierank.model.VarietyShowModel;
 import com.qxy.movierank.utils.RetrofitUtil;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class VarietyShowViewModel extends ViewModel implements VarietyShowContract.ViewModel {
 
     private VarietyShowModel model;
-    private MutableLiveData<List<RankBean.DataDTO.ListDTO>> mVarietyBeanList;
+    private MutableLiveData<RankBean.DataDTO> mVarietyRankData;
     //client_access_token是否已刷新
     private MutableLiveData<Boolean> isClientTokenRefreshComplete;
 
     public VarietyShowViewModel() {
         model = new VarietyShowModel();
-        mVarietyBeanList = new MutableLiveData<>();
+        mVarietyRankData = new MutableLiveData<>();
         isClientTokenRefreshComplete = new MutableLiveData<>(false);
     }
 
-    public LiveData<List<RankBean.DataDTO.ListDTO>> getmVarietyBeanList() {
-        return mVarietyBeanList;
+    public MutableLiveData<RankBean.DataDTO> getmVarietyRankData() {
+        return mVarietyRankData;
     }
 
     public MutableLiveData<Boolean> getIsClientTokenRefreshComplete() {
@@ -38,12 +37,13 @@ public class VarietyShowViewModel extends ViewModel implements VarietyShowContra
     }
 
     @Override
-    public void loadVarietyRank() {
-        model.getVarietyRankData(new InfoCallBack() {
+    public void loadVarietyRank(String type,String version) {
+        model.getVarietyRankData(type,version,new InfoCallBack() {
             @Override
             public void resultSuccess(Object obj) {
                 if(((RankBean)obj).getData().getError_code() == 0){
-                    mVarietyBeanList.postValue(((RankBean) obj).getData().getList());
+                    mVarietyRankData.postValue(((RankBean)obj).getData());
+
                 } else if (((RankBean)obj).getData().getError_code() == 2190008){
                     /*
                     "description": "access_token过期,请刷新或重新授权", "error_code": 2190008
