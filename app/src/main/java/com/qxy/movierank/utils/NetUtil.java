@@ -22,12 +22,7 @@ public class NetUtil {
 
         if (activeNetworkInfo!=null&&activeNetworkInfo.isConnected()){
             //判断是否是wifi
-            if (activeNetworkInfo.getType()==(ConnectivityManager.TYPE_WIFI)){
-                //返回无线网络
-                Toast.makeText(context, "当前处于无线网络", Toast.LENGTH_SHORT).show();
-                return NETWORW_WIFI;
-                //判断是否移动网络
-            }else if (activeNetworkInfo.getType()==(ConnectivityManager.TYPE_MOBILE)){
+            if (activeNetworkInfo.getType()==(ConnectivityManager.TYPE_MOBILE)){
                 Toast.makeText(context, "当前处于移动网络", Toast.LENGTH_SHORT).show();
                 //返回移动网络
                 return NETWORK_MOBILE;
