@@ -76,7 +76,7 @@ public class VarietyAdapter extends RecyclerView.Adapter<VarietyAdapter.InnerHol
             nameVarietyItem = (TextView) itemView.findViewById(R.id.name_variety_item);
             nameEnVarietyItem = (TextView) itemView.findViewById(R.id.name_en_variety_item);
             directorVarietyItem = (TextView) itemView.findViewById(R.id.director_variety_item);
-            actorVarietyItem = (TextView) itemView.findViewById(R.id.actor_variety_item);
+            //actorVarietyItem = (TextView) itemView.findViewById(R.id.actor_variety_item);综艺榜单不需要演员
             releasedateVarietyItem= (TextView) itemView.findViewById(R.id.release_date_variety_item);
             popularityVarietyItem = (TextView) itemView.findViewById(R.id.popularity_variety_item);
         }
