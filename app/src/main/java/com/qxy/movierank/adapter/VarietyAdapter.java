@@ -104,20 +104,20 @@ public class VarietyAdapter extends RecyclerView.Adapter<VarietyAdapter.InnerHol
                 }
             }
             directorVarietyItem.setText(dirctors);
-            //演员列表，显示前3
-            if (varietyShowBean.getActors() != null) {
-                List<String> actors_List = varietyShowBean.getActors();
-                int count = 0;
-                for (String actor : actors_List) {
-                    actors += actor;
-                    if(count != 2 || count == actors_List.size()-1){
-                        actors +=" / ";
-                    }
-                    count++;
-                    if (count > 2) break;
-                }
-            }
-            actorVarietyItem.setText(actors);
+//            //演员列表，显示前3
+//            if (varietyShowBean.getActors() != null) {
+//                List<String> actors_List = varietyShowBean.getActors();
+//                int count = 0;
+//                for (String actor : actors_List) {
+//                    actors += actor;
+//                    if(count != 2 || count == actors_List.size()-1){
+//                        actors +=" / ";
+//                    }
+//                    count++;
+//                    if (count > 2) break;
+//                }
+//            }
+//            actorVarietyItem.setText(actors);
 
             //播出日期
             releasedateVarietyItem.setText(varietyShowBean.getRelease_date()==null?"":varietyShowBean.getRelease_date()+" 播出");
