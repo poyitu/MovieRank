@@ -181,35 +181,35 @@ public class TVseriesFragment extends Fragment implements VarietyShowContract.Vi
 
     }
 
-    private void initData() {
-        RetrofitUtil retrofitUtil = RetrofitUtil.getInstance();
-        retrofitUtil.getRank_Tomcat("2", null, new RetrofitUtil.CallBack() {
-            @Override
-            public void onSuccess(Object o) {
-                String json = o.toString();
-                Log.d(TAG, "json: " + json);
-                List<RankBean.DataDTO.ListDTO> rank_list = ((RankBean) o).getData().getList();
-//                for (RankBean.DataDTO.ListDTO listDTO : rank_list) {
-//                    Log.d(TAG, "onSuccess: " + listDTO.getName());
+//    private void initData() {
+//        RetrofitUtil retrofitUtil = RetrofitUtil.getInstance();
+//        retrofitUtil.getRank_Tomcat("2", null, new RetrofitUtil.CallBack() {
+//            @Override
+//            public void onSuccess(Object o) {
+//                String json = o.toString();
+//                Log.d(TAG, "json: " + json);
+//                List<RankBean.DataDTO.ListDTO> rank_list = ((RankBean) o).getData().getList();
+////                for (RankBean.DataDTO.ListDTO listDTO : rank_list) {
+////                    Log.d(TAG, "onSuccess: " + listDTO.getName());
+////                }
+//
+//                if (((RankBean) o).getData().getError_code() == 0) {
+//                    mAdapter.setData(rank_list);
+//                    mSaveLocal.saveBean(rank_list, ITEMNAME);
+//                } else {
+//                    Log.d("测试", "onSuccess: " + ((RankBean) o).getData().getDescription());
 //                }
-
-                if (((RankBean) o).getData().getError_code() == 0) {
-                    mAdapter.setData(rank_list);
-                    mSaveLocal.saveBean(rank_list, ITEMNAME);
-                } else {
-                    Log.d("测试", "onSuccess: " + ((RankBean) o).getData().getDescription());
-                }
-
-                // mAdapter = new MovieAdapter(getActivity(), rank_list);
-
-            }
-
-            @Override
-            public void onFailed(Throwable t) {
-
-            }
-        });
-    }
+//
+//                // mAdapter = new MovieAdapter(getActivity(), rank_list);
+//
+//            }
+//
+//            @Override
+//            public void onFailed(Throwable t) {
+//
+//            }
+//        });
+//    }
 
     private void initRecyclerview() {
         //创建adapter类的对象
@@ -281,6 +281,6 @@ public class TVseriesFragment extends Fragment implements VarietyShowContract.Vi
         }
 
         mAdapter.setData(varietyShowBeanList);
-        // 接受获取到的数据，并存储到本地
+
     }
 }
