@@ -93,7 +93,15 @@ public class VarietyShowFragment extends Fragment implements VarietyShowContract
         mSaveLocal = new SaveLocal(getActivity());
         initView(root);
         initRecyclerView();
-        initObserveData();
+        SharedPreferences rankItem = getActivity().getSharedPreferences(ITEMNAME, 0);
+        if (rankItem != null && netWorkStart == 1) {
+            // 断网时初始化本地数据
+            initLoclDate();
+        } else {
+            //初始化数据
+            initObserveData();
+        }
+
         return root;
     }
 
@@ -133,7 +141,7 @@ public class VarietyShowFragment extends Fragment implements VarietyShowContract
         varietyShowViewModel.getmVarietyRankData().observe(getViewLifecycleOwner(), new Observer<RankBean.DataDTO>() {
             @Override
             public void onChanged(RankBean.DataDTO dataDTO) {
-                showVarietyRank(dataDTO.getActive_time(),dataDTO.getList());
+                showVarietyRank(dataDTO.getActive_time(), dataDTO.getList());
 
             }
         });
@@ -161,7 +169,6 @@ public class VarietyShowFragment extends Fragment implements VarietyShowContract
 
         varietyAdapter.setData(varietyShowBeanList);
         // 接受获取到的数据，并存储到本地
-        mSaveLocal.saveBean(varietyShowBeanList, ITEMNAME);
     }
 
 
