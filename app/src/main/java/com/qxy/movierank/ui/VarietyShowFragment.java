@@ -133,8 +133,7 @@ public class VarietyShowFragment extends Fragment implements VarietyShowContract
         super.onStart();
         //加载综艺榜数据
         varietyShowViewModel.loadVarietyRank(getContext(), rankType, rankVersion);
-        //加载综艺榜版本数据
-        varietyShowViewModel.loadVarietyRankVersion("0","10",rankType);
+
     }
 
     private void initView(View root) {
@@ -145,7 +144,8 @@ public class VarietyShowFragment extends Fragment implements VarietyShowContract
         currentRankVersionVariety.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                rankVersionListViewAdapter.setData(rankVersion_List);
+                //加载综艺榜版本数据
+                varietyShowViewModel.loadVarietyRankVersion("0","10",rankType);
                 rankVersionDialog.show();
             }
         });
@@ -189,6 +189,8 @@ public class VarietyShowFragment extends Fragment implements VarietyShowContract
             @Override
             public void onChanged(RankVersionBean.DataDTO dataDTO) {
                 rankVersion_List = dataDTO.getList();
+                rankVersionListViewAdapter.setData(rankVersion_List);
+
             }
         });
 
