@@ -1,12 +1,15 @@
 package com.qxy.movierank.ui;
 
+import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ListView;
 import android.widget.TextView;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
@@ -45,11 +48,15 @@ public class VarietyShowFragment extends Fragment implements VarietyShowContract
     private VarietyShowViewModel varietyShowViewModel;
 
     private String rankType = "3";
-    private String rankVersion = "";
+    private String rankVersion = "141";
+    private String start_time_rank = "2022-08-01";
+    private String end_time_rank = "2022-08-08";
     private TextView currentRankVersionVariety;
     private TextView historyRankVersionVariety;
     private int netWorkStart;
     private SaveLocal mSaveLocal;
+
+    private AlertDialog rankVersionDialog;
 
     public VarietyShowFragment() {
         // Required empty public constructor
@@ -93,6 +100,8 @@ public class VarietyShowFragment extends Fragment implements VarietyShowContract
         mSaveLocal = new SaveLocal(getActivity());
         initView(root);
         initRecyclerView();
+        initObserveData();
+        initShowRankVersionDialog();
         SharedPreferences rankItem = getActivity().getSharedPreferences(ITEMNAME, 0);
         if (rankItem != null && netWorkStart == 1) {
             // 断网时初始化本地数据
@@ -105,10 +114,25 @@ public class VarietyShowFragment extends Fragment implements VarietyShowContract
         return root;
     }
 
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        //加载综艺榜数据
+        varietyShowViewModel.loadVarietyRank(getContext(),rankType, rankVersion);
+    }
+
     private void initView(View root) {
         varietyShowRankRecyclerViewVariert = (RecyclerView) root.findViewById(R.id.varietyShowRank_RecyclerView_variert);
         currentRankVersionVariety = (TextView) root.findViewById(R.id.currentRankVersion_variety);
         historyRankVersionVariety = (TextView) root.findViewById(R.id.historyRankVersion_variety);
+
+        currentRankVersionVariety.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                rankVersionDialog.show();
+            }
+        });
     }
 
     // 加载本地数据
@@ -150,22 +174,41 @@ public class VarietyShowFragment extends Fragment implements VarietyShowContract
         varietyShowViewModel.getIsClientTokenRefreshComplete().observe(getViewLifecycleOwner(), new Observer<Boolean>() {
             @Override
             public void onChanged(Boolean aBoolean) {
-                varietyShowViewModel.loadVarietyRank(rankType, rankVersion);
+                varietyShowViewModel.loadVarietyRank(getContext(),rankType, rankVersion);
             }
         });
 
     }
 
-    @Override
-    public void onStart() {
-        super.onStart();
-        //加载综艺榜数据
-        varietyShowViewModel.loadVarietyRank(rankType, rankVersion);
+
+    private void initShowRankVersionDialog(){
+        View view = View.inflate(getContext(),R.layout.dialog_rank_version,null);
+
+        androidx.appcompat.app.AlertDialog.Builder builder = new androidx.appcompat.app.AlertDialog.Builder(getContext());
+        rankVersionDialog = builder
+                .setTitle("榜单版本")
+                .setView(view)
+                .setNegativeButton("完成", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+
+                    }
+                })
+                .create();
+
+
+
     }
 
     @Override
-    public void showVarietyRank(String active_time, List<RankBean.DataDTO.ListDTO> varietyShowBeanList) {
-        currentRankVersionVariety.setText("更新于" + active_time);
+    public void showVarietyRank(String active_time,List<RankBean.DataDTO.ListDTO> varietyShowBeanList) {
+        //本周榜
+        if(rankVersion.isEmpty()){
+            currentRankVersionVariety.setText("本周榜 | 更新于"+active_time+" 12:00");
+        }else {
+            //非本周榜
+            currentRankVersionVariety.setText("第"+rankVersion+"期 "+start_time_rank+"~"+end_time_rank);
+        }
 
         varietyAdapter.setData(varietyShowBeanList);
         // 接受获取到的数据，并存储到本地

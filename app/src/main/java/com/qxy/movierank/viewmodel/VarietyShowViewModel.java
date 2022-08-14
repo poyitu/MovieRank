@@ -1,5 +1,6 @@
 package com.qxy.movierank.viewmodel;
 
+import android.content.Context;
 import android.util.Log;
 
 import androidx.lifecycle.LiveData;
@@ -39,7 +40,7 @@ public class VarietyShowViewModel extends ViewModel implements VarietyShowContra
     }
 
     @Override
-    public void loadVarietyRank(String type,String version) {
+    public void loadVarietyRank(Context context,String type, String version) {
         model.getVarietyRankData(type,version,new InfoCallBack() {
             private static final String ITEMNAME = "Variety";
 
@@ -48,6 +49,7 @@ public class VarietyShowViewModel extends ViewModel implements VarietyShowContra
                 if(((RankBean)obj).getData().getError_code() == 0){
                     mVarietyRankData.postValue(((RankBean)obj).getData());
                     List<RankBean.DataDTO.ListDTO> list = ((RankBean) obj).getData().getList();
+                    mSaveLocal = new SaveLocal(context);
                     mSaveLocal.saveBean(list, ITEMNAME);
                 } else if (((RankBean)obj).getData().getError_code() == 2190008){
                     /*

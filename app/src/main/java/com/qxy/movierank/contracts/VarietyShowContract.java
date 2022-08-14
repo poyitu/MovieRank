@@ -1,5 +1,7 @@
 package com.qxy.movierank.contracts;
 
+import android.content.Context;
+
 import com.qxy.movierank.bean.RankBean;
 import com.qxy.movierank.interfaces.InfoCallBack;
 
@@ -35,7 +37,7 @@ public interface VarietyShowContract {
         /**
          * 加载综艺榜数据
          */
-        void loadVarietyRank(String type,String version);
+        void loadVarietyRank(Context context,String type, String version);
 
     }
 }
