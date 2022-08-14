@@ -27,6 +27,9 @@ public class VarietyShowViewModel extends ViewModel implements VarietyShowContra
     private MutableLiveData<Boolean> isClientTokenRefreshComplete;
     private SaveLocal mSaveLocal;
 
+    private String ITEMNAME = "Variety";
+
+
     public VarietyShowViewModel() {
         model = new VarietyShowModel();
         mVarietyRankData = new MutableLiveData<>();
@@ -48,16 +51,22 @@ public class VarietyShowViewModel extends ViewModel implements VarietyShowContra
 
     @Override
     public void loadVarietyRank(Context context,String type, String version) {
+        if(type.equals("1")){
+            ITEMNAME = "movie";
+        }else if(type.equals("2")){
+            ITEMNAME = "Variety";
+        }else {
+            ITEMNAME = "tv";
+        }
         model.getVarietyRankData(type,version,new InfoCallBack() {
-            private static final String ITEMNAME = "Variety";
 
             @Override
             public void resultSuccess(Object obj) {
                 if(((RankBean)obj).getData().getError_code() == 0){
-                    mVarietyRankData.postValue(((RankBean)obj).getData());
                     List<RankBean.DataDTO.ListDTO> list = ((RankBean) obj).getData().getList();
                     mSaveLocal = new SaveLocal(context);
                     mSaveLocal.saveBean(list, ITEMNAME);
+                    mVarietyRankData.postValue(((RankBean)obj).getData());
                 } else if (((RankBean)obj).getData().getError_code() == 2190008){
                     /*
                     "description": "access_token过期,请刷新或重新授权", "error_code": 2190008

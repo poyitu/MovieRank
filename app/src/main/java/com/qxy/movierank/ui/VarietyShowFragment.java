@@ -113,13 +113,16 @@ public class VarietyShowFragment extends Fragment implements VarietyShowContract
         initRecyclerView();
         initObserveData();
         initShowRankVersionDialog();
+
+        netWorkStart = NetUtil.getNetWorkStart(getActivity());
+
         SharedPreferences rankItem = getActivity().getSharedPreferences(ITEMNAME, 0);
         if (rankItem != null && netWorkStart == 1) {
             // 断网时初始化本地数据
             initLoclDate();
         } else {
             //初始化数据
-            initObserveData();
+//            initObserveData();
         }
 
         return root;
@@ -155,6 +158,7 @@ public class VarietyShowFragment extends Fragment implements VarietyShowContract
 
     // 加载本地数据
     private void initLoclDate() {
+        Log.d("测试", "initLoclDate: "+"11111111111111111111");
         List<RankBean.DataDTO.ListDTO> bean = mSaveLocal.getBean(ITEMNAME);
         varietyAdapter.setData(bean);
     }
