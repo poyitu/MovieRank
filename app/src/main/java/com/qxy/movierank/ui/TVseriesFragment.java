@@ -138,7 +138,7 @@ public class TVseriesFragment extends Fragment {
     private void initRecyclerview() {
         mRecyclerView = (RecyclerView) root.findViewById(R.id.tv1);
         //创建adapter类的对象
-        netWorkStart = NetUtil.getNetWorkStart(getActivity());
+        //netWorkStart = NetUtil.getNetWorkStart(getActivity());
         //将对象作为参数通过setAdapter方法设置给recylerview；
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         mAdapter = new TvAdapter(getActivity());
