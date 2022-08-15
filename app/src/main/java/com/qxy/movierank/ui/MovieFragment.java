@@ -147,7 +147,7 @@ public class MovieFragment extends Fragment implements VarietyShowContract.View 
             public void onClick(View view) {
                 if (isFirstGetRankVersion) {
                     //加载电影榜版本数据
-                    varietyShowViewModel.loadVarietyRankVersion(active_time_rank,"0","10",rankType);
+                    varietyShowViewModel.loadVarietyRankVersion(active_time_rank, "0", "10", rankType);
                     isFirstGetRankVersion = false;
                 }
 
@@ -155,6 +155,7 @@ public class MovieFragment extends Fragment implements VarietyShowContract.View 
             }
         });
     }
+
     private void initLoclDate() {
         List<RankBean.DataDTO.ListDTO> bean = mSaveLocal.getBean(ITEMNAME);
         mAdapter.setData(bean);
@@ -176,7 +177,7 @@ public class MovieFragment extends Fragment implements VarietyShowContract.View 
     @Override
     public void showVarietyRank(String active_time, List<RankBean.DataDTO.ListDTO> varietyShowBeanList) {
         //本周榜
-        if (rankVersion.equals("0")|| rankVersion.isEmpty()) {
+        if (rankVersion.equals("0") || rankVersion.isEmpty()) {
             currentRankVersionMovieRank.setText("本周榜 | 更新于" + active_time + " 12:00");
         } else {
             //非本周榜
@@ -185,6 +186,7 @@ public class MovieFragment extends Fragment implements VarietyShowContract.View 
 
         mAdapter.setData(varietyShowBeanList);
     }
+
     private void initObserveData() {
 
         varietyShowViewModel.getmVarietyRankData().observe(getViewLifecycleOwner(), new Observer<RankBean.DataDTO>() {
@@ -225,13 +227,13 @@ public class MovieFragment extends Fragment implements VarietyShowContract.View 
                 .setAdapter(rankVersionListViewAdapter, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
-                        rankVersion = rankVersion_List.get(i).getVersion()+"";
+                        rankVersion = rankVersion_List.get(i).getVersion() + "";
                         start_time_rank = rankVersion_List.get(i).getStart_time();
                         end_time_rank = rankVersion_List.get(i).getEnd_time();
 
-                        varietyShowViewModel.loadVarietyRank(getContext(),rankType,rankVersion);
+                        varietyShowViewModel.loadVarietyRank(getContext(), rankType, rankVersion);
 
-                        Toast.makeText(getContext(),"点击了"+rankVersion_List.get(i).getVersion(),Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getContext(), "点击了" + rankVersion_List.get(i).getVersion(), Toast.LENGTH_SHORT).show();
 
                     }
                 })

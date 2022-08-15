@@ -33,6 +33,6 @@ public class NetUtil {
             return NETWORK_NONE;
         }
         //默认返回  没有网络
-        return NETWORK_NONE;
+        return NETWORK_MOBILE;
     }
 }

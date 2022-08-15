@@ -1,7 +1,7 @@
 
-e
-5app/src/main/java/com/qxy/movierank/MainActivity.java,c\9\c97829e908574363fa1024e33144fad6099b1fcb
 \
 ,.idea/inspectionProfiles/Project_Default.xml,4\9\496a238a6afa168dbaf6efd37bb459331589579c
-k
-;app/src/main/java/com/qxy/movierank/utils/RetrofitUtil.java,2\4\24c1737a85737a4eddb44ec872307a445fde275a
+P
+ app/src/main/AndroidManifest.xml,8\c\8c55c3ccc257e5907959013f99656e4c8ec3903e
+h
+8app/src/main/java/com/qxy/movierank/utils/JsonParse.java,5\1\51f898196bf3f4758d85ad7b8551076bac8c1731

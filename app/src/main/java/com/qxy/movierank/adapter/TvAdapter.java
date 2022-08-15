@@ -53,6 +53,9 @@ public class TvAdapter extends RecyclerView.Adapter<TvAdapter.InnerHolder> {
         if (mData != null) {
             mData.clear();
         }
+        if (varietyShowBeanList == null) {
+            return;
+        }
         mData.addAll(varietyShowBeanList);
         //更新UI
         notifyDataSetChanged();
@@ -98,8 +101,8 @@ public class TvAdapter extends RecyclerView.Adapter<TvAdapter.InnerHolder> {
                     .load(varietyShowBean.getPoster())
                     .error(R.mipmap.ic_launcher)
                     .into(posterTvItem);
-            nameTvItem.setText(varietyShowBean.getName() == null ? "" : varietyShowBean.getName()+"");
-            nameEnTvItem.setText(varietyShowBean.getName_en() == null?"":varietyShowBean.getName_en()+"");
+            nameTvItem.setText(varietyShowBean.getName() == null ? "" : varietyShowBean.getName() + "");
+            nameEnTvItem.setText(varietyShowBean.getName_en() == null ? "" : varietyShowBean.getName_en() + "");
 
             //导演
             if (varietyShowBean.getDirectors() != null) {
@@ -122,8 +125,8 @@ public class TvAdapter extends RecyclerView.Adapter<TvAdapter.InnerHolder> {
                 int count = 0;
                 for (String actor : actors_List) {
                     actors += actor;
-                    if(count != 2 || count == actors_List.size()-1){
-                        actors +=" / ";
+                    if (count != 2 || count == actors_List.size() - 1) {
+                        actors += " / ";
                     }
                     count++;
                     if (count > 2) break;
@@ -136,11 +139,11 @@ public class TvAdapter extends RecyclerView.Adapter<TvAdapter.InnerHolder> {
                 int count = 0;
                 for (String tag : tags_List) {
                     tags += tag;
-                    if(count != 2 && count != tags_List.size()-1){
+                    if (count != 2 && count != tags_List.size() - 1) {
                         tags += " / ";
                     }
                     count++;
-                    if(count > 2) break;
+                    if (count > 2) break;
                 }
 
             }
@@ -152,11 +155,11 @@ public class TvAdapter extends RecyclerView.Adapter<TvAdapter.InnerHolder> {
                 int count = 0;
                 for (String area : areas_List) {
                     areas += area;
-                    if(count != 2 && count != areas_List.size()-1){
+                    if (count != 2 && count != areas_List.size() - 1) {
                         areas += " / ";
                     }
                     count++;
-                    if(count > 2) break;
+                    if (count > 2) break;
                 }
 
                 regionTvItem.setText(areas);
